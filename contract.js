@@ -1,5 +1,5 @@
 const contract = {
-  CONTRACT_ADDRESS: "5DLpvtVLGWJCCwT1PbjuMr1Ssq8o3uxgRN4JbUQK4f8YFCMu",
+  CONTRACT_ADDRESS: "5GgXBBdKuXzpok5FTyo1FTyBVo4p36qojcWKcZRJe8WJPEyR",
   CONTRACT_ABI: {
     source: {
       hash: "0x5224fe7a15f174d0c0650f8a984f2a0ad42bb908bcc0bf549061657790ef1e6e",
@@ -157,7 +157,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 32,
+                type: 29,
               },
             },
             {
@@ -217,7 +217,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 32,
+                type: 29,
               },
             },
             {
@@ -268,7 +268,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 32,
+                type: 29,
               },
             },
             {
@@ -1176,6 +1176,19 @@ const contract = {
           selector: "0x4e7b81d5",
         },
         {
+          args: [],
+          default: false,
+          docs: [],
+          label: "Ownable::owner",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 28,
+          },
+          selector: "0x4fa43c8c",
+        },
+        {
           args: [
             {
               label: "new_owner",
@@ -1192,7 +1205,7 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 28,
+            type: 30,
           },
           selector: "0x11f43efd",
         },
@@ -1205,22 +1218,9 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 28,
+            type: 30,
           },
           selector: "0x5e228753",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [],
-          label: "Ownable::owner",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 31,
-          },
-          selector: "0x4fa43c8c",
         },
         {
           args: [],
@@ -2353,112 +2353,6 @@ const contract = {
             variant: {
               variants: [
                 {
-                  fields: [
-                    {
-                      type: 7,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 30,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 7,
-            },
-            {
-              name: "E",
-              type: 30,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 30,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  index: 0,
-                  name: "CallerIsNotOwner",
-                },
-                {
-                  index: 1,
-                  name: "NewOwnerIsZero",
-                },
-              ],
-            },
-          },
-          path: [
-            "openbrush_contracts",
-            "traits",
-            "errors",
-            "ownable",
-            "OwnableError",
-          ],
-        },
-      },
-      {
-        id: 31,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 32,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 32,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 32,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
                   index: 0,
                   name: "None",
                 },
@@ -2481,6 +2375,112 @@ const contract = {
             },
           ],
           path: ["Option"],
+        },
+      },
+      {
+        id: 30,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 31,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 31,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 31,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 7,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 32,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 7,
+            },
+            {
+              name: "E",
+              type: 32,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 32,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "CallerIsNotOwner",
+                },
+                {
+                  index: 1,
+                  name: "NewOwnerIsZero",
+                },
+              ],
+            },
+          },
+          path: [
+            "openbrush_contracts",
+            "traits",
+            "errors",
+            "ownable",
+            "OwnableError",
+          ],
         },
       },
       {
