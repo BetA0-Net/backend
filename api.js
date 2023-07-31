@@ -2,7 +2,12 @@ let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contract");
-let { randomInt, getEstimatedGas, getRandomNumber } = require("./utils");
+let {
+  randomInt,
+  getEstimatedGas,
+  getRandomNumber,
+  getRandomNumberWithInterval,
+} = require("./utils");
 require("dotenv").config();
 
 let socket = "wss://ws.test.azero.dev";
@@ -81,22 +86,14 @@ app.post("/getEventsByPlayer", async (req, res) => {
 // finalize
 app.post("/finalize", async (req, res) => {
   let { player } = req.body;
+  // getRandomNumberWithInterval
+  const intervalTime = 1000; // Time between two API calls
+  const random_arr = await getRandomNumberWithInterval(0, 99, 0, intervalTime);
   let rd_number;
-  const random_arr = await getRandomNumber(0, 99, 0);
+
   if (random_arr) {
-    // rd_number = random_arr[Math.floor(Math.random() * random_arr.length)];
     rd_number = random_arr[0];
   } else {
-    // const intervalTime = 1000;
-    // const interval = setInterval(setRandomNumber, intervalTime);
-
-    // function setRandomNumber() {
-    //   if (random_arr) {
-    //     rd_number = random_arr[0];
-    //     clearInterval(interval);
-    //   }
-    // }
-
     return res.status(500).json({ error: "api random error!" });
   }
 
