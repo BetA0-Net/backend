@@ -179,10 +179,10 @@ module.exports.readOnlyGasLimit = function (contract) {
 const API_URL = process.env.API_RANDOM_NUMBER;
 const role = process.env.ROLE_API_RANDOM_NUMBER;
 
-async function getRandomNumber(min, max, count) {
+async function getRandomNumber(min, max) {
   try {
     let res = await fetch(
-      `${API_URL}/${role}?min=${min}&max=${max}&count=${count}`
+      `${API_URL}/${role}/?num=1&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`
     );
     return await res.json();
   } catch (error) {
@@ -193,13 +193,12 @@ async function getRandomNumber(min, max, count) {
 module.exports.getRandomNumberWithInterval = async function (
   min,
   max,
-  count,
   intervalTime
 ) {
   return new Promise((resolve, reject) => {
     const interval = setInterval(async () => {
       try {
-        const random_arr = await getRandomNumber(min, max, count);
+        const random_arr = await getRandomNumber(min, max);
         if (random_arr) {
           clearInterval(interval);
           resolve(random_arr);

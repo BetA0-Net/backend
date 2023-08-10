@@ -88,11 +88,11 @@ app.post("/finalize", async (req, res) => {
   let { player } = req.body;
   // getRandomNumberWithInterval
   const intervalTime = 1000; // Time between two API calls
-  const random_arr = await getRandomNumberWithInterval(0, 99, 0, intervalTime);
+  const number_api = await getRandomNumberWithInterval(0, 99, intervalTime);
   let rd_number;
 
-  if (random_arr) {
-    rd_number = random_arr[0];
+  if (number_api) {
+    rd_number = number_api;
   } else {
     return res.status(500).json({ error: "api random error!" });
   }
