@@ -6,7 +6,6 @@ let {
   randomInt,
   getEstimatedGas,
   getRandomNumber,
-  getRandomNumberWithInterval,
 } = require("./utils");
 require("dotenv").config();
 
@@ -86,15 +85,14 @@ app.post("/getEventsByPlayer", async (req, res) => {
 // finalize
 app.post("/finalize", async (req, res) => {
   let { player } = req.body;
-  // getRandomNumberWithInterval
-  const intervalTime = 1000; // Time between two API calls
-  const number_api = await getRandomNumberWithInterval(0, 99, intervalTime);
+
+  const number_api = await getRandomNumber();
   let rd_number;
 
   if (number_api) {
     rd_number = number_api;
   } else {
-    return res.status(500).json({ error: "api random error!" });
+    return randomInt(0,99);
   }
 
   try {

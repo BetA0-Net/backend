@@ -179,34 +179,26 @@ module.exports.readOnlyGasLimit = function (contract) {
 const API_URL = process.env.API_RANDOM_NUMBER;
 const role = process.env.ROLE_API_RANDOM_NUMBER;
 
-async function getRandomNumber(min, max) {
-  try {
-    let res = await fetch(
-      `${API_URL}/${role}/?num=1&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`
-    );
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
+module.exports.getRandomNumber = async function () {
+  const options = {
+    method: 'GET',
+    url: `${API_URL}/${role}`,
+    params: {
+      min: '0',
+      max: '99',
+      fragment: 'true',
+      json: 'true'
+    },
+    headers: {
+      'X-RapidAPI-Key': '0cc3b29ef4msh0885b763408f67ep1bbc99jsnbbda27b2d4de',
+      'X-RapidAPI-Host': 'numbersapi.p.rapidapi.com'
+    }
+  };  
 
-module.exports.getRandomNumberWithInterval = async function (
-  min,
-  max,
-  intervalTime
-) {
-  return new Promise((resolve, reject) => {
-    const interval = setInterval(async () => {
-      try {
-        const random_arr = await getRandomNumber(min, max);
-        if (random_arr) {
-          clearInterval(interval);
-          resolve(random_arr);
-        }
-      } catch (error) {
-        console.error("Error fetching random number:", error);
-        reject(error);
-      }
-    }, intervalTime);
-  });
+  try {
+    const response = await axios.request(options);
+    return response.data.number;
+  } catch (error) {
+    console.error(error);
+  }
 };
