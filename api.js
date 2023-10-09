@@ -2,10 +2,12 @@ let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contract");
+let { randomContract } = require("./rd_contract");
 let {
   randomInt,
   getEstimatedGas,
-  getRandomNumber,
+  getRandomNumberByContract,
+  executeRandom,
 } = require("./utils");
 require("dotenv").config();
 
@@ -85,14 +87,27 @@ app.post("/getEventsByPlayer", async (req, res) => {
 // finalize
 app.post("/finalize", async (req, res) => {
   let { player } = req.body;
-
-  const number_api = await getRandomNumber();
   let rd_number;
 
-  if (number_api) {
-    rd_number = number_api;
+  const random_contract = new ContractPromise(
+    api,
+    randomContract.CONTRACT_ABI,
+    randomContract.CONTRACT_ADDRESS
+  );
+
+  if (random_contract) {
+    const executeRd = await executeRandom(random_contract, player, 99);
+
+    if (executeRd) {
+      const randomNumber = await getRandomNumberByContract(
+        random_contract,
+        player
+      );
+
+      if (randomNumber) rd_number = randomNumber;
+    }
   } else {
-    return randomInt(0,99);
+    rd_number = randomInt(0, 99);
   }
 
   try {

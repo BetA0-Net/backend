@@ -1,9 +1,9 @@
 const contract = {
-  CONTRACT_ADDRESS: "5DsqCi3TNk6uERnqgTdDeGrfHTEAuN2pyvd6CoWV8Abj97pN",
+  CONTRACT_ADDRESS: "5HbhcTwea1UgX2ynqD5nj4EwobEFPMcyn5FrefwXLUnobUuu",
   CONTRACT_ABI: {
     source: {
-      hash: "0x20db0b95aff6130f3a5e479667fadf813b2c66b04816c269828cefbf281aefd0",
-      language: "ink! 4.2.1",
+      hash: "0xe9850c09c2f35b98032348f1bad13ba86d604bf45515a102258462410294c47a",
+      language: "ink! 4.3.0",
       compiler: "rustc 1.70.0-nightly",
       build_info: {
         build_mode: "Debug",
@@ -28,35 +28,7 @@ const contract = {
               label: "max_bet_ratio",
               type: {
                 displayName: ["u32"],
-                type: 5,
-              },
-            },
-            {
-              label: "revenue_ratio",
-              type: {
-                displayName: ["u32"],
-                type: 5,
-              },
-            },
-            {
-              label: "reward_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
-              },
-            },
-            {
-              label: "general_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
-              },
-            },
-            {
-              label: "bet_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
+                type: 4,
               },
             },
             {
@@ -70,39 +42,74 @@ const contract = {
               label: "token_ratio",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "min_over_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "max_over_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "min_under_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "max_under_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
-              label: "admin_account",
+              label: "admin_address",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
+              label: "core_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "staking_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "treasury_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "staking_address",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
+              label: "treasury_address",
               type: {
                 displayName: ["AccountId"],
                 type: 0,
@@ -128,24 +135,24 @@ const contract = {
         },
         balance: {
           displayName: ["Balance"],
-          type: 6,
+          type: 7,
         },
         blockNumber: {
           displayName: ["BlockNumber"],
-          type: 5,
+          type: 4,
         },
         chainExtension: {
           displayName: ["ChainExtension"],
-          type: 39,
+          type: 41,
         },
         hash: {
           displayName: ["Hash"],
-          type: 33,
+          type: 35,
         },
         maxEventTopics: 4,
         timestamp: {
           displayName: ["Timestamp"],
-          type: 38,
+          type: 18,
         },
       },
       events: [
@@ -157,7 +164,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 30,
+                type: 24,
               },
             },
             {
@@ -175,7 +182,7 @@ const contract = {
               label: "random_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -184,7 +191,7 @@ const contract = {
               label: "bet_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -193,7 +200,7 @@ const contract = {
               label: "bet_amount",
               type: {
                 displayName: ["Balance"],
-                type: 6,
+                type: 7,
               },
             },
             {
@@ -202,7 +209,7 @@ const contract = {
               label: "win_amount",
               type: {
                 displayName: ["Balance"],
-                type: 6,
+                type: 7,
               },
             },
           ],
@@ -217,7 +224,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 30,
+                type: 24,
               },
             },
             {
@@ -235,7 +242,7 @@ const contract = {
               label: "random_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -244,7 +251,7 @@ const contract = {
               label: "bet_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -253,7 +260,7 @@ const contract = {
               label: "bet_amount",
               type: {
                 displayName: ["Balance"],
-                type: 6,
+                type: 7,
               },
             },
           ],
@@ -268,7 +275,7 @@ const contract = {
               label: "player",
               type: {
                 displayName: ["Option"],
-                type: 30,
+                type: 24,
               },
             },
             {
@@ -286,7 +293,7 @@ const contract = {
               label: "bet_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -295,7 +302,7 @@ const contract = {
               label: "bet_amount",
               type: {
                 displayName: ["Balance"],
-                type: 6,
+                type: 7,
               },
             },
           ],
@@ -314,35 +321,7 @@ const contract = {
               label: "max_bet_ratio",
               type: {
                 displayName: ["u32"],
-                type: 5,
-              },
-            },
-            {
-              label: "revenue_ratio",
-              type: {
-                displayName: ["u32"],
-                type: 5,
-              },
-            },
-            {
-              label: "reward_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
-              },
-            },
-            {
-              label: "general_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
-              },
-            },
-            {
-              label: "bet_pool",
-              type: {
-                displayName: ["AccountId"],
-                type: 0,
+                type: 4,
               },
             },
             {
@@ -356,39 +335,74 @@ const contract = {
               label: "token_ratio",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "min_over_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "max_over_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "min_under_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
               label: "max_under_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
-              label: "admin_account",
+              label: "admin_address",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
+              label: "core_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "staking_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "treasury_pool_ratio",
+              type: {
+                displayName: ["u32"],
+                type: 4,
+              },
+            },
+            {
+              label: "staking_address",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
+              label: "treasury_address",
               type: {
                 displayName: ["AccountId"],
                 type: 0,
@@ -412,7 +426,7 @@ const contract = {
               label: "bet_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
             {
@@ -430,7 +444,7 @@ const contract = {
           payable: true,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 17,
+            type: 10,
           },
           selector: "0x9963949f",
         },
@@ -447,7 +461,7 @@ const contract = {
               label: "random_number",
               type: {
                 displayName: ["u32"],
-                type: 5,
+                type: 4,
               },
             },
           ],
@@ -465,36 +479,189 @@ const contract = {
         {
           args: [],
           default: false,
-          docs: [" Function changes state"],
-          label: "BetA0CoreTrait::change_state",
-          mutates: true,
+          docs: [" Get psp22 address"],
+          label: "BetA0CoreTrait::bet_token_address",
+          mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 19,
+            type: 20,
           },
-          selector: "0x305a2c7c",
+          selector: "0x45b373ac",
         },
         {
           args: [
             {
-              label: "bet_pool",
+              label: "address",
               type: {
-                displayName: ["beta0coretrait_external", "SetBetPoolInput1"],
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetStakingAddressInput1",
+                ],
                 type: 0,
               },
             },
           ],
           default: false,
-          docs: [" Set bet_pool"],
-          label: "BetA0CoreTrait::set_bet_pool",
+          docs: [" Set staking pool address"],
+          label: "BetA0CoreTrait::set_staking_address",
           mutates: true,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
             type: 10,
           },
-          selector: "0xe278565f",
+          selector: "0xcf79cb2a",
+        },
+        {
+          args: [
+            {
+              label: "value",
+              type: {
+                displayName: ["beta0coretrait_external", "WithdrawFeeInput1"],
+                type: 7,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Withdraw Fees - only Owner"],
+          label: "BetA0CoreTrait::withdraw_fee",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xb1aed1dc",
+        },
+        {
+          args: [
+            {
+              label: "pool",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "TranferTokenToPoolInput1",
+                ],
+                type: 0,
+              },
+            },
+            {
+              label: "amount",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "TranferTokenToPoolInput2",
+                ],
+                type: 7,
+              },
+            },
+          ],
+          default: false,
+          docs: [" tranfer token to pool"],
+          label: "BetA0CoreTrait::tranfer_token_to_pool",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xd455769a",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [],
+          label: "BetA0CoreTrait::get_max_bet",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 21,
+          },
+          selector: "0x93aa56df",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get treasury pool amount"],
+          label: "BetA0CoreTrait::get_treasury_pool_amount",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 21,
+          },
+          selector: "0xf9424e8e",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" get min number over roll"],
+          label: "BetA0CoreTrait::get_min_number_over_roll",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0xfc8a4a50",
+        },
+        {
+          args: [
+            {
+              label: "over_rates",
+              type: {
+                displayName: ["beta0coretrait_external", "SetRatesInput1"],
+                type: 6,
+              },
+            },
+            {
+              label: "under_rates",
+              type: {
+                displayName: ["beta0coretrait_external", "SetRatesInput2"],
+                type: 6,
+              },
+            },
+          ],
+          default: false,
+          docs: [
+            " Set over_rates and discount rate - Only Owner 2 vectors same size",
+          ],
+          label: "BetA0CoreTrait::set_rates",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x62500603",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get Max Bet"],
+          label: "BetA0CoreTrait::get_max_bet_ratio",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0xb18a8f89",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Function changes state"],
+          label: "BetA0CoreTrait::change_state",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x305a2c7c",
         },
         {
           args: [
@@ -502,7 +669,7 @@ const contract = {
               label: "value",
               type: {
                 displayName: ["beta0coretrait_external", "WithdrawTokenInput1"],
-                type: 6,
+                type: 7,
               },
             },
           ],
@@ -520,360 +687,26 @@ const contract = {
         {
           args: [
             {
-              label: "player",
+              label: "ratio",
               type: {
                 displayName: [
                   "beta0coretrait_external",
-                  "RewardTokenToPlayerInput1",
+                  "SetCorePoolRatioInput1",
                 ],
-                type: 0,
-              },
-            },
-            {
-              label: "bet_amount",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "RewardTokenToPlayerInput2",
-                ],
-                type: 6,
+                type: 4,
               },
             },
           ],
           default: false,
-          docs: [" reward token by bet pool"],
-          label: "BetA0CoreTrait::reward_token_to_player",
+          docs: [" Set core pool ratio"],
+          label: "BetA0CoreTrait::set_core_pool_ratio",
           mutates: true,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
             type: 10,
           },
-          selector: "0xe7015c51",
-        },
-        {
-          args: [
-            {
-              label: "admin_account",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetAdminAccountInput1",
-                ],
-                type: 0,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set admin id"],
-          label: "BetA0CoreTrait::set_admin_account",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0xd7ab667f",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [],
-          label: "BetA0CoreTrait::get_max_bet",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 21,
-          },
-          selector: "0x93aa56df",
-        },
-        {
-          args: [
-            {
-              label: "player",
-              type: {
-                displayName: ["beta0coretrait_external", "GetBetInput1"],
-                type: 0,
-              },
-            },
-          ],
-          default: false,
-          docs: [" get bet"],
-          label: "BetA0CoreTrait::get_bet",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 22,
-          },
-          selector: "0x0dc968b3",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get revenue ratio"],
-          label: "BetA0CoreTrait::get_revenue_ratio",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 25,
-          },
-          selector: "0x7e7317d4",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get max number over roll"],
-          label: "BetA0CoreTrait::get_max_number_over_roll",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 25,
-          },
-          selector: "0x78687252",
-        },
-        {
-          args: [
-            {
-              label: "max_under_number",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetMaxNumberUnderRollInput1",
-                ],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set max number under roll"],
-          label: "BetA0CoreTrait::set_max_number_under_roll",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0xe3879fee",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" Get Max Bet"],
-          label: "BetA0CoreTrait::get_max_bet_ratio",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 25,
-          },
-          selector: "0xb18a8f89",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" Get psp22 address"],
-          label: "BetA0CoreTrait::bet_token_address",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 26,
-          },
-          selector: "0x45b373ac",
-        },
-        {
-          args: [
-            {
-              label: "max_over_number",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetMaxNumberOverRollInput1",
-                ],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set max number over roll"],
-          label: "BetA0CoreTrait::set_max_number_over_roll",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0x9943f4b5",
-        },
-        {
-          args: [
-            {
-              label: "general_pool",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetGeneralPoolInput1",
-                ],
-                type: 0,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set max bet ratio"],
-          label: "BetA0CoreTrait::set_general_pool",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0x6a22225b",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get min number over roll"],
-          label: "BetA0CoreTrait::get_min_number_over_roll",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 25,
-          },
-          selector: "0xfc8a4a50",
-        },
-        {
-          args: [
-            {
-              label: "value",
-              type: {
-                displayName: ["beta0coretrait_external", "WithdrawFeeInput1"],
-                type: 6,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Withdraw Fees - only Owner"],
-          label: "BetA0CoreTrait::withdraw_fee",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0xb1aed1dc",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get bet pool"],
-          label: "BetA0CoreTrait::get_bet_pool",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 26,
-          },
-          selector: "0xf2945be3",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get contract token balance"],
-          label: "BetA0CoreTrait::get_token_balance",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 21,
-          },
-          selector: "0x9ed23743",
-        },
-        {
-          args: [
-            {
-              label: "token_ratio",
-              type: {
-                displayName: ["beta0coretrait_external", "SetTokenRatioInput1"],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set new token ratio"],
-          label: "BetA0CoreTrait::set_token_ratio",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0x2979f379",
-        },
-        {
-          args: [
-            {
-              label: "player",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "IsBetAvailableInput1",
-                ],
-                type: 0,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Is bet exist"],
-          label: "BetA0CoreTrait::is_bet_available",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 27,
-          },
-          selector: "0xd36f536e",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [" get max number under roll"],
-          label: "BetA0CoreTrait::get_max_number_under_roll",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 25,
-          },
-          selector: "0x9f571242",
-        },
-        {
-          args: [
-            {
-              label: "min_under_number",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetMinNumberUnderRollInput1",
-                ],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set min number under roll"],
-          label: "BetA0CoreTrait::set_min_number_under_roll",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0xfbed57ce",
+          selector: "0x68981d7b",
         },
         {
           args: [
@@ -900,17 +733,41 @@ const contract = {
           selector: "0x7b887113",
         },
         {
+          args: [
+            {
+              label: "address",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetTreasuryAddressInput1",
+                ],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set treasury pool address"],
+          label: "BetA0CoreTrait::set_treasury_address",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xbdb879fd",
+        },
+        {
           args: [],
           default: false,
-          docs: [" Get Over Rates"],
-          label: "BetA0CoreTrait::get_over_rates",
+          docs: [" get admin id"],
+          label: "BetA0CoreTrait::get_admin_account",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 28,
+            type: 20,
           },
-          selector: "0x0712d707",
+          selector: "0x04747907",
         },
         {
           args: [
@@ -937,129 +794,30 @@ const contract = {
           selector: "0x4fb01e84",
         },
         {
-          args: [
-            {
-              label: "revenue_ratio",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetRevenueRatioInput1",
-                ],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set revenue_ratio"],
-          label: "BetA0CoreTrait::set_revenue_ratio",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0xdcc98c25",
-        },
-        {
-          args: [
-            {
-              label: "over_rates",
-              type: {
-                displayName: ["beta0coretrait_external", "SetRatesInput1"],
-                type: 4,
-              },
-            },
-            {
-              label: "under_rates",
-              type: {
-                displayName: ["beta0coretrait_external", "SetRatesInput2"],
-                type: 4,
-              },
-            },
-          ],
-          default: false,
-          docs: [
-            " Set over_rates and discount rate - Only Owner 2 vectors same size",
-          ],
-          label: "BetA0CoreTrait::set_rates",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0x62500603",
-        },
-        {
           args: [],
           default: false,
-          docs: [" get reward pool"],
-          label: "BetA0CoreTrait::get_reward_pool",
+          docs: [" Get treasury pool address"],
+          label: "BetA0CoreTrait::get_treasury_address",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 26,
+            type: 23,
           },
-          selector: "0x4284ecb5",
+          selector: "0x0f6874b2",
         },
         {
-          args: [
-            {
-              label: "pool",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "TranferTokenToPoolInput1",
-                ],
-                type: 0,
-              },
-            },
-            {
-              label: "amount",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "TranferTokenToPoolInput2",
-                ],
-                type: 6,
-              },
-            },
-          ],
+          args: [],
           default: false,
-          docs: [" tranfer token to pool"],
-          label: "BetA0CoreTrait::tranfer_token_to_pool",
-          mutates: true,
+          docs: [" Get token ratio"],
+          label: "BetA0CoreTrait::get_token_ratio",
+          mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 10,
+            type: 22,
           },
-          selector: "0xd455769a",
-        },
-        {
-          args: [
-            {
-              label: "max_bet_ratio",
-              type: {
-                displayName: [
-                  "beta0coretrait_external",
-                  "SetMaxBetRatioInput1",
-                ],
-                type: 5,
-              },
-            },
-          ],
-          default: false,
-          docs: [" Set max bet ratio"],
-          label: "BetA0CoreTrait::set_max_bet_ratio",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 10,
-          },
-          selector: "0x5bc9734b",
+          selector: "0x5bf4a937",
         },
         {
           args: [],
@@ -1070,9 +828,22 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 28,
+            type: 25,
           },
           selector: "0x657dfccb",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" get max number under roll"],
+          label: "BetA0CoreTrait::get_max_number_under_roll",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0x9f571242",
         },
         {
           args: [],
@@ -1083,35 +854,253 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 25,
+            type: 22,
           },
           selector: "0xa6185fcb",
         },
         {
-          args: [],
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "IsBetAvailableInput1",
+                ],
+                type: 0,
+              },
+            },
+          ],
           default: false,
-          docs: [" get admin id"],
-          label: "BetA0CoreTrait::get_admin_account",
+          docs: [" Is bet exist"],
+          label: "BetA0CoreTrait::is_bet_available",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
             type: 26,
           },
-          selector: "0x04747907",
+          selector: "0xd36f536e",
         },
         {
           args: [],
           default: false,
-          docs: [" get general pool"],
-          label: "BetA0CoreTrait::get_general_pool",
+          docs: [" get max number over roll"],
+          label: "BetA0CoreTrait::get_max_number_over_roll",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 26,
+            type: 22,
           },
-          selector: "0x1df721e9",
+          selector: "0x78687252",
+        },
+        {
+          args: [
+            {
+              label: "ratio",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetTreasuryPoolRatioInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set treasury pool ratio"],
+          label: "BetA0CoreTrait::set_treasury_pool_ratio",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x882f3f6c",
+        },
+        {
+          args: [
+            {
+              label: "min_under_number",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetMinNumberUnderRollInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set min number under roll"],
+          label: "BetA0CoreTrait::set_min_number_under_roll",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xfbed57ce",
+        },
+        {
+          args: [
+            {
+              label: "max_under_number",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetMaxNumberUnderRollInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set max number under roll"],
+          label: "BetA0CoreTrait::set_max_number_under_roll",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xe3879fee",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get core pool ratio"],
+          label: "BetA0CoreTrait::get_core_pool_ratio",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0xff43351c",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get Over Rates"],
+          label: "BetA0CoreTrait::get_over_rates",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 25,
+          },
+          selector: "0x0712d707",
+        },
+        {
+          args: [
+            {
+              label: "address",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "GetHoldAmountPlayersInput1",
+                ],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Get hold amount players"],
+          label: "BetA0CoreTrait::get_hold_amount_players",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 27,
+          },
+          selector: "0xcbf00dde",
+        },
+        {
+          args: [
+            {
+              label: "max_over_number",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetMaxNumberOverRollInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set max number over roll"],
+          label: "BetA0CoreTrait::set_max_number_over_roll",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x9943f4b5",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" get balance contract"],
+          label: "BetA0CoreTrait::balance_of",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 21,
+          },
+          selector: "0x97dacaa6",
+        },
+        {
+          args: [
+            {
+              label: "index",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "GetHoldPlayersByIndexInput1",
+                ],
+                type: 18,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Get hold players by index"],
+          label: "BetA0CoreTrait::get_hold_players_by_index",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 23,
+          },
+          selector: "0x65781383",
+        },
+        {
+          args: [
+            {
+              label: "admin_account",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetAdminAccountInput1",
+                ],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set admin id"],
+          label: "BetA0CoreTrait::set_admin_account",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xd7ab667f",
         },
         {
           args: [
@@ -1126,7 +1115,7 @@ const contract = {
               label: "bet_amount",
               type: {
                 displayName: ["beta0coretrait_external", "RewardTokenInput2"],
-                type: 6,
+                type: 7,
               },
             },
           ],
@@ -1144,36 +1133,81 @@ const contract = {
         {
           args: [],
           default: false,
-          docs: [" Get token ratio"],
-          label: "BetA0CoreTrait::get_token_ratio",
+          docs: [" get contract token balance"],
+          label: "BetA0CoreTrait::get_token_balance",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 25,
+            type: 21,
           },
-          selector: "0x5bf4a937",
+          selector: "0x9ed23743",
         },
         {
           args: [
             {
-              label: "reward_pool",
+              label: "token_ratio",
               type: {
-                displayName: ["beta0coretrait_external", "SetRewardPoolInput1"],
-                type: 0,
+                displayName: ["beta0coretrait_external", "SetTokenRatioInput1"],
+                type: 4,
               },
             },
           ],
           default: false,
-          docs: [" Set reward_pool"],
-          label: "BetA0CoreTrait::set_reward_pool",
+          docs: [" Set new token ratio"],
+          label: "BetA0CoreTrait::set_token_ratio",
           mutates: true,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
             type: 10,
           },
-          selector: "0x8fccd75d",
+          selector: "0x2979f379",
+        },
+        {
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: ["beta0coretrait_external", "GetBetInput1"],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [" get bet"],
+          label: "BetA0CoreTrait::get_bet",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 29,
+          },
+          selector: "0x0dc968b3",
+        },
+        {
+          args: [
+            {
+              label: "receiver",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "WithdrawHoldAmountInput1",
+                ],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Withdraw hold amount"],
+          label: "BetA0CoreTrait::withdraw_hold_amount",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x167480ff",
         },
         {
           args: [
@@ -1184,7 +1218,7 @@ const contract = {
                   "beta0coretrait_external",
                   "SetMinNumberOverRollInput1",
                 ],
-                type: 5,
+                type: 4,
               },
             },
           ],
@@ -1202,36 +1236,141 @@ const contract = {
         {
           args: [],
           default: false,
-          docs: [],
-          label: "Ownable::owner",
+          docs: [" Get treasury pool ratio"],
+          label: "BetA0CoreTrait::get_treasury_pool_ratio",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 29,
+            type: 22,
           },
-          selector: "0x4fa43c8c",
+          selector: "0x91e985a3",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get staking pool address"],
+          label: "BetA0CoreTrait::get_staking_address",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 23,
+          },
+          selector: "0x566725c2",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Update core pool - only owner and admin"],
+          label: "BetA0CoreTrait::update_core_pool",
+          mutates: true,
+          payable: true,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0xf9dc2460",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get Hold Player Count"],
+          label: "BetA0CoreTrait::get_hold_bidder_count",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 32,
+          },
+          selector: "0x2c55007a",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get core pool amout"],
+          label: "BetA0CoreTrait::get_core_pool_amout",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 21,
+          },
+          selector: "0x35014602",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get staking pool amount"],
+          label: "BetA0CoreTrait::get_staking_pool_amount",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 21,
+          },
+          selector: "0x641fd73d",
         },
         {
           args: [
             {
-              label: "new_owner",
+              label: "max_bet_ratio",
               type: {
-                displayName: ["ownable_external", "TransferOwnershipInput1"],
-                type: 0,
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetMaxBetRatioInput1",
+                ],
+                type: 4,
               },
             },
           ],
           default: false,
-          docs: [],
-          label: "Ownable::transfer_ownership",
+          docs: [" Set max bet ratio"],
+          label: "BetA0CoreTrait::set_max_bet_ratio",
           mutates: true,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 31,
+            type: 10,
           },
-          selector: "0x11f43efd",
+          selector: "0x5bc9734b",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [" Get staking pool ratio"],
+          label: "BetA0CoreTrait::get_staking_pool_ratio",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0xe84e0c62",
+        },
+        {
+          args: [
+            {
+              label: "ratio",
+              type: {
+                displayName: [
+                  "beta0coretrait_external",
+                  "SetStakingPoolRatioInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [" Set staking pool ratio"],
+          label: "BetA0CoreTrait::set_staking_pool_ratio",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 10,
+          },
+          selector: "0x0e28e5a6",
         },
         {
           args: [],
@@ -1242,9 +1381,43 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 31,
+            type: 33,
           },
           selector: "0x5e228753",
+        },
+        {
+          args: [
+            {
+              label: "new_owner",
+              type: {
+                displayName: ["ownable_external", "TransferOwnershipInput1"],
+                type: 24,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "Ownable::transfer_ownership",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 33,
+          },
+          selector: "0x11f43efd",
+        },
+        {
+          args: [],
+          default: false,
+          docs: [],
+          label: "Ownable::owner",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 23,
+          },
+          selector: "0x4fa43c8c",
         },
         {
           args: [],
@@ -1255,7 +1428,7 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 27,
+            type: 26,
           },
           selector: "0xd123ce11",
         },
@@ -1265,7 +1438,7 @@ const contract = {
               label: "new_code_hash",
               type: {
                 displayName: ["upgradeable_external", "SetCodeHashInput1"],
-                type: 33,
+                type: 35,
               },
             },
           ],
@@ -1276,9 +1449,200 @@ const contract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 34,
+            type: 36,
           },
           selector: "0x1700ae80",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                type: 4,
+              },
+            },
+            {
+              label: "account",
+              type: {
+                displayName: ["accesscontrol_external", "RenounceRoleInput2"],
+                type: 24,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControl::renounce_role",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 39,
+          },
+          selector: "0xeaf1248a",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: ["accesscontrol_external", "HasRoleInput1"],
+                type: 4,
+              },
+            },
+            {
+              label: "address",
+              type: {
+                displayName: ["accesscontrol_external", "HasRoleInput2"],
+                type: 24,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControl::has_role",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 26,
+          },
+          selector: "0xc1d9ac18",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: ["accesscontrol_external", "GetRoleAdminInput1"],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControl::get_role_admin",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0x83da3bb2",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: ["accesscontrol_external", "RevokeRoleInput1"],
+                type: 4,
+              },
+            },
+            {
+              label: "account",
+              type: {
+                displayName: ["accesscontrol_external", "RevokeRoleInput2"],
+                type: 24,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControl::revoke_role",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 39,
+          },
+          selector: "0x6e4f0991",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: ["accesscontrol_external", "GrantRoleInput1"],
+                type: 4,
+              },
+            },
+            {
+              label: "account",
+              type: {
+                displayName: ["accesscontrol_external", "GrantRoleInput2"],
+                type: 24,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControl::grant_role",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 39,
+          },
+          selector: "0x4ac062fd",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: [
+                  "accesscontrolenumerable_external",
+                  "GetRoleMemberInput1",
+                ],
+                type: 4,
+              },
+            },
+            {
+              label: "index",
+              type: {
+                displayName: [
+                  "accesscontrolenumerable_external",
+                  "GetRoleMemberInput2",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControlEnumerable::get_role_member",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 23,
+          },
+          selector: "0x163469e0",
+        },
+        {
+          args: [
+            {
+              label: "role",
+              type: {
+                displayName: [
+                  "accesscontrolenumerable_external",
+                  "GetRoleMemberCountInput1",
+                ],
+                type: 4,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "AccessControlEnumerable::get_role_member_count",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 22,
+          },
+          selector: "0xf1b1a9d7",
         },
       ],
     },
@@ -1361,9 +1725,105 @@ const contract = {
                     fields: [
                       {
                         layout: {
+                          root: {
+                            layout: {
+                              leaf: {
+                                key: "0x1f2cf4ac",
+                                ty: 4,
+                              },
+                            },
+                            root_key: "0x1f2cf4ac",
+                          },
+                        },
+                        name: "admin_roles",
+                      },
+                      {
+                        layout: {
+                          root: {
+                            layout: {
+                              leaf: {
+                                key: "0x8150f558",
+                                ty: 5,
+                              },
+                            },
+                            root_key: "0x8150f558",
+                          },
+                        },
+                        name: "members",
+                      },
+                    ],
+                    name: "Data",
+                  },
+                },
+                name: "access",
+              },
+              {
+                layout: {
+                  struct: {
+                    fields: [
+                      {
+                        layout: {
+                          root: {
+                            layout: {
+                              leaf: {
+                                key: "0x1eb9f2a8",
+                                ty: 4,
+                              },
+                            },
+                            root_key: "0x1eb9f2a8",
+                          },
+                        },
+                        name: "admin_roles",
+                      },
+                      {
+                        layout: {
+                          root: {
+                            layout: {
+                              enum: {
+                                dispatchKey: "0x869d6fc0",
+                                name: "Option",
+                                variants: {
+                                  0: {
+                                    fields: [],
+                                    name: "None",
+                                  },
+                                  1: {
+                                    fields: [
+                                      {
+                                        layout: {
+                                          leaf: {
+                                            key: "0x869d6fc0",
+                                            ty: 0,
+                                          },
+                                        },
+                                        name: "0",
+                                      },
+                                    ],
+                                    name: "Some",
+                                  },
+                                },
+                              },
+                            },
+                            root_key: "0x869d6fc0",
+                          },
+                        },
+                        name: "role_members",
+                      },
+                    ],
+                    name: "Data",
+                  },
+                },
+                name: "enumerable",
+              },
+              {
+                layout: {
+                  struct: {
+                    fields: [
+                      {
+                        layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 4,
+                            ty: 6,
                           },
                         },
                         name: "over_rates",
@@ -1372,7 +1832,7 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 4,
+                            ty: 6,
                           },
                         },
                         name: "under_rates",
@@ -1381,7 +1841,7 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "max_bet_ratio",
@@ -1399,7 +1859,7 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "token_ratio",
@@ -1423,7 +1883,7 @@ const contract = {
                                     layout: {
                                       leaf: {
                                         key: "0xf5c3fa2a",
-                                        ty: 5,
+                                        ty: 4,
                                       },
                                     },
                                     name: "bet_number",
@@ -1432,7 +1892,7 @@ const contract = {
                                     layout: {
                                       leaf: {
                                         key: "0xf5c3fa2a",
-                                        ty: 6,
+                                        ty: 7,
                                       },
                                     },
                                     name: "bet_amount",
@@ -1453,49 +1913,13 @@ const contract = {
                             ty: 0,
                           },
                         },
-                        name: "admin_account",
+                        name: "admin_address",
                       },
                       {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
-                          },
-                        },
-                        name: "revenue_ratio",
-                      },
-                      {
-                        layout: {
-                          leaf: {
-                            key: "0x00000000",
-                            ty: 0,
-                          },
-                        },
-                        name: "reward_pool",
-                      },
-                      {
-                        layout: {
-                          leaf: {
-                            key: "0x00000000",
-                            ty: 0,
-                          },
-                        },
-                        name: "general_pool",
-                      },
-                      {
-                        layout: {
-                          leaf: {
-                            key: "0x00000000",
-                            ty: 0,
-                          },
-                        },
-                        name: "bet_pool",
-                      },
-                      {
-                        layout: {
-                          leaf: {
-                            key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "min_over_number",
@@ -1504,7 +1928,7 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "max_over_number",
@@ -1513,7 +1937,7 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "min_under_number",
@@ -1522,10 +1946,160 @@ const contract = {
                         layout: {
                           leaf: {
                             key: "0x00000000",
-                            ty: 5,
+                            ty: 4,
                           },
                         },
                         name: "max_under_number",
+                      },
+                      {
+                        layout: {
+                          root: {
+                            layout: {
+                              leaf: {
+                                key: "0x81d019cc",
+                                ty: 7,
+                              },
+                            },
+                            root_key: "0x81d019cc",
+                          },
+                        },
+                        name: "hold_amount_players",
+                      },
+                      {
+                        layout: {
+                          root: {
+                            layout: {
+                              leaf: {
+                                key: "0x03bea4fa",
+                                ty: 0,
+                              },
+                            },
+                            root_key: "0x03bea4fa",
+                          },
+                        },
+                        name: "hold_players",
+                      },
+                      {
+                        layout: {
+                          struct: {
+                            fields: [
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 4,
+                                  },
+                                },
+                                name: "core_pool_ratio",
+                              },
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 4,
+                                  },
+                                },
+                                name: "staking_pool_ratio",
+                              },
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 4,
+                                  },
+                                },
+                                name: "treasury_pool_ratio",
+                              },
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 7,
+                                  },
+                                },
+                                name: "core_pool_amout",
+                              },
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 7,
+                                  },
+                                },
+                                name: "staking_pool_amount",
+                              },
+                              {
+                                layout: {
+                                  leaf: {
+                                    key: "0x00000000",
+                                    ty: 7,
+                                  },
+                                },
+                                name: "treasury_pool_amount",
+                              },
+                              {
+                                layout: {
+                                  enum: {
+                                    dispatchKey: "0x00000000",
+                                    name: "Option",
+                                    variants: {
+                                      0: {
+                                        fields: [],
+                                        name: "None",
+                                      },
+                                      1: {
+                                        fields: [
+                                          {
+                                            layout: {
+                                              leaf: {
+                                                key: "0x00000000",
+                                                ty: 0,
+                                              },
+                                            },
+                                            name: "0",
+                                          },
+                                        ],
+                                        name: "Some",
+                                      },
+                                    },
+                                  },
+                                },
+                                name: "staking_address",
+                              },
+                              {
+                                layout: {
+                                  enum: {
+                                    dispatchKey: "0x00000000",
+                                    name: "Option",
+                                    variants: {
+                                      0: {
+                                        fields: [],
+                                        name: "None",
+                                      },
+                                      1: {
+                                        fields: [
+                                          {
+                                            layout: {
+                                              leaf: {
+                                                key: "0x00000000",
+                                                ty: 0,
+                                              },
+                                            },
+                                            name: "0",
+                                          },
+                                        ],
+                                        name: "Some",
+                                      },
+                                    },
+                                  },
+                                },
+                                name: "treasury_address",
+                              },
+                            ],
+                            name: "PoolManager",
+                          },
+                        },
+                        name: "pool_manager",
                       },
                       {
                         layout: {
@@ -1543,7 +2117,7 @@ const contract = {
                                     layout: {
                                       leaf: {
                                         key: "0x00000000",
-                                        ty: 7,
+                                        ty: 5,
                                       },
                                     },
                                     name: "0",
@@ -1561,6 +2135,45 @@ const contract = {
                   },
                 },
                 name: "manager",
+              },
+              {
+                layout: {
+                  struct: {
+                    fields: [
+                      {
+                        layout: {
+                          enum: {
+                            dispatchKey: "0x00000000",
+                            name: "Option",
+                            variants: {
+                              0: {
+                                fields: [],
+                                name: "None",
+                              },
+                              1: {
+                                fields: [
+                                  {
+                                    layout: {
+                                      leaf: {
+                                        key: "0x00000000",
+                                        ty: 5,
+                                      },
+                                    },
+                                    name: "0",
+                                  },
+                                ],
+                                name: "Some",
+                              },
+                            },
+                          },
+                        },
+                        name: "_reserved",
+                      },
+                    ],
+                    name: "Data",
+                  },
+                },
+                name: "admin_data",
               },
             ],
             name: "BetA0CoreContract",
@@ -1617,9 +2230,7 @@ const contract = {
         id: 4,
         type: {
           def: {
-            sequence: {
-              type: 5,
-            },
+            primitive: "u32",
           },
         },
       },
@@ -1627,7 +2238,7 @@ const contract = {
         id: 5,
         type: {
           def: {
-            primitive: "u32",
+            tuple: [],
           },
         },
       },
@@ -1635,7 +2246,9 @@ const contract = {
         id: 6,
         type: {
           def: {
-            primitive: "u128",
+            sequence: {
+              type: 4,
+            },
           },
         },
       },
@@ -1643,7 +2256,7 @@ const contract = {
         id: 7,
         type: {
           def: {
-            tuple: [],
+            primitive: "u128",
           },
         },
       },
@@ -1656,7 +2269,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 5,
                     },
                   ],
                   index: 0,
@@ -1677,7 +2290,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 7,
+              type: 5,
             },
             {
               name: "E",
@@ -1752,7 +2365,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 5,
                     },
                   ],
                   index: 0,
@@ -1773,7 +2386,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 7,
+              type: 5,
             },
             {
               name: "E",
@@ -1800,39 +2413,185 @@ const contract = {
                   name: "Custom",
                 },
                 {
+                  index: 1,
+                  name: "OnlyOwner",
+                },
+                {
+                  index: 2,
+                  name: "OnlyAdmin",
+                },
+                {
+                  index: 3,
+                  name: "InvalidCaller",
+                },
+                {
+                  index: 4,
+                  name: "OnlyMinterCanMint",
+                },
+                {
+                  index: 5,
+                  name: "NotApproved",
+                },
+                {
+                  index: 6,
+                  name: "CannotTransfer",
+                },
+                {
+                  index: 7,
+                  name: "CannotMint",
+                },
+                {
+                  index: 8,
+                  name: "InvalidBuyTokensStatus",
+                },
+                {
+                  index: 9,
+                  name: "InsufficientAllowanceToLend",
+                },
+                {
+                  index: 10,
+                  name: "NotEnoughBalance",
+                },
+                {
+                  index: 11,
+                  name: "WithdrawFeeError",
+                },
+                {
+                  index: 12,
+                  name: "MaxBuyTokenAmount",
+                },
+                {
+                  index: 13,
+                  name: "TokensCanNotPurchased",
+                },
+                {
+                  index: 14,
+                  name: "TransferFailed",
+                },
+                {
+                  index: 15,
+                  name: "AlreadyInit",
+                },
+                {
+                  index: 16,
+                  name: "NotOwner",
+                },
+                {
+                  index: 17,
+                  name: "BetNotFinalized",
+                },
+                {
+                  index: 18,
+                  name: "CallerIsNotAdmin",
+                },
+                {
+                  index: 19,
+                  name: "InvalidInput",
+                },
+                {
+                  index: 20,
+                  name: "BetNotExist",
+                },
+                {
+                  index: 21,
+                  name: "HoldAmountPlayerNotExist",
+                },
+                {
+                  index: 22,
+                  name: "NoAmount",
+                },
+                {
+                  index: 23,
+                  name: "InvalidBalanceAndAllowance",
+                },
+                {
+                  index: 24,
+                  name: "InvalidUnstakedAmount",
+                },
+                {
+                  index: 25,
+                  name: "NotTimeToUnstaked",
+                },
+                {
+                  index: 26,
+                  name: "NoStakerFound",
+                },
+                {
+                  index: 27,
+                  name: "NotStaked",
+                },
+                {
+                  index: 28,
+                  name: "InvalidTotalStake",
+                },
+                {
+                  index: 29,
+                  name: "CallerNotRequestUnstake",
+                },
+                {
+                  index: 30,
+                  name: "ClaimMustBeFalse",
+                },
+                {
+                  index: 31,
+                  name: "RewardStarted",
+                },
+                {
+                  index: 32,
+                  name: "RewardNotStarted",
+                },
+                {
+                  index: 33,
+                  name: "InvalidInputRatio",
+                },
+                {
                   fields: [
                     {
                       type: 14,
-                      typeName: "PSP22Error",
+                      typeName: "OwnableError",
                     },
                   ],
-                  index: 1,
-                  name: "PSP22Error",
+                  index: 34,
+                  name: "OwnableError",
                 },
                 {
                   fields: [
                     {
                       type: 15,
-                      typeName: "PausableError",
+                      typeName: "AccessControlError",
                     },
                   ],
-                  index: 2,
-                  name: "PausableError",
+                  index: 35,
+                  name: "AccessControlError",
                 },
                 {
                   fields: [
                     {
                       type: 16,
-                      typeName: "OwnableError",
+                      typeName: "PSP22Error",
                     },
                   ],
-                  index: 3,
-                  name: "OwnableError",
+                  index: 36,
+                  name: "PSP22Error",
+                },
+                {
+                  fields: [
+                    {
+                      type: 19,
+                      typeName: "PausableError",
+                    },
+                  ],
+                  index: 37,
+                  name: "PausableError",
+                },
+                {
+                  index: 38,
+                  name: "CheckedOperations",
                 },
               ],
             },
           },
-          path: ["bet_a0", "traits", "beta0_core", "CoreError"],
+          path: ["bet_a0", "traits", "error", "Error"],
         },
       },
       {
@@ -1845,6 +2604,62 @@ const contract = {
       },
       {
         id: 14,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "CallerIsNotOwner",
+                },
+                {
+                  index: 1,
+                  name: "NewOwnerIsNotSet",
+                },
+              ],
+            },
+          },
+          path: [
+            "openbrush_contracts",
+            "traits",
+            "errors",
+            "ownable",
+            "OwnableError",
+          ],
+        },
+      },
+      {
+        id: 15,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "InvalidCaller",
+                },
+                {
+                  index: 1,
+                  name: "MissingRole",
+                },
+                {
+                  index: 2,
+                  name: "RoleRedundant",
+                },
+              ],
+            },
+          },
+          path: [
+            "openbrush_contracts",
+            "traits",
+            "errors",
+            "access_control",
+            "AccessControlError",
+          ],
+        },
+      },
+      {
+        id: 16,
         type: {
           def: {
             variant: {
@@ -1869,11 +2684,11 @@ const contract = {
                 },
                 {
                   index: 3,
-                  name: "ZeroRecipientAddress",
+                  name: "RecipientIsNotSet",
                 },
                 {
                   index: 4,
-                  name: "ZeroSenderAddress",
+                  name: "SenderIsNotSet",
                 },
                 {
                   fields: [
@@ -1884,6 +2699,24 @@ const contract = {
                   ],
                   index: 5,
                   name: "SafeTransferCheckFailed",
+                },
+                {
+                  index: 6,
+                  name: "PermitInvalidSignature",
+                },
+                {
+                  index: 7,
+                  name: "PermitExpired",
+                },
+                {
+                  fields: [
+                    {
+                      type: 17,
+                      typeName: "NoncesError",
+                    },
+                  ],
+                  index: 8,
+                  name: "NoncesError",
                 },
               ],
             },
@@ -1898,7 +2731,51 @@ const contract = {
         },
       },
       {
-        id: 15,
+        id: 17,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 0,
+                      typeName: "AccountId",
+                    },
+                    {
+                      type: 18,
+                      typeName: "u64",
+                    },
+                  ],
+                  index: 0,
+                  name: "InvalidAccountNonce",
+                },
+                {
+                  index: 1,
+                  name: "NonceOverflow",
+                },
+              ],
+            },
+          },
+          path: [
+            "openbrush_contracts",
+            "traits",
+            "errors",
+            "nonces",
+            "NoncesError",
+          ],
+        },
+      },
+      {
+        id: 18,
+        type: {
+          def: {
+            primitive: "u64",
+          },
+        },
+      },
+      {
+        id: 19,
         type: {
           def: {
             variant: {
@@ -1924,371 +2801,7 @@ const contract = {
         },
       },
       {
-        id: 16,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  index: 0,
-                  name: "CallerIsNotOwner",
-                },
-                {
-                  index: 1,
-                  name: "NewOwnerIsZero",
-                },
-              ],
-            },
-          },
-          path: [
-            "openbrush_contracts",
-            "traits",
-            "errors",
-            "ownable",
-            "OwnableError",
-          ],
-        },
-      },
-      {
-        id: 17,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 18,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 18,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 18,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 7,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 14,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 7,
-            },
-            {
-              name: "E",
-              type: 14,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 19,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 20,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 20,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
         id: 20,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 7,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 15,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 7,
-            },
-            {
-              name: "E",
-              type: 15,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 21,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 6,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 6,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 22,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 23,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 23,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 23,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  index: 0,
-                  name: "None",
-                },
-                {
-                  fields: [
-                    {
-                      type: 24,
-                    },
-                  ],
-                  index: 1,
-                  name: "Some",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 24,
-            },
-          ],
-          path: ["Option"],
-        },
-      },
-      {
-        id: 24,
-        type: {
-          def: {
-            composite: {
-              fields: [
-                {
-                  name: "is_over",
-                  type: 2,
-                  typeName: "u8",
-                },
-                {
-                  name: "bet_number",
-                  type: 5,
-                  typeName: "u32",
-                },
-                {
-                  name: "bet_amount",
-                  type: 6,
-                  typeName: "Balance",
-                },
-              ],
-            },
-          },
-          path: ["bet_a0", "impls", "beta0_core", "data", "BetInformation"],
-        },
-      },
-      {
-        id: 25,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
-                  fields: [
-                    {
-                      type: 5,
-                    },
-                  ],
-                  index: 0,
-                  name: "Ok",
-                },
-                {
-                  fields: [
-                    {
-                      type: 9,
-                    },
-                  ],
-                  index: 1,
-                  name: "Err",
-                },
-              ],
-            },
-          },
-          params: [
-            {
-              name: "T",
-              type: 5,
-            },
-            {
-              name: "E",
-              type: 9,
-            },
-          ],
-          path: ["Result"],
-        },
-      },
-      {
-        id: 26,
         type: {
           def: {
             variant: {
@@ -2328,7 +2841,198 @@ const contract = {
         },
       },
       {
-        id: 27,
+        id: 21,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 7,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 7,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 22,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 4,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 4,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 23,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 24,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 24,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 24,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "None",
+                },
+                {
+                  fields: [
+                    {
+                      type: 0,
+                    },
+                  ],
+                  index: 1,
+                  name: "Some",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 0,
+            },
+          ],
+          path: ["Option"],
+        },
+      },
+      {
+        id: 25,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 6,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 6,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 26,
         type: {
           def: {
             variant: {
@@ -2368,7 +3072,7 @@ const contract = {
         },
       },
       {
-        id: 28,
+        id: 27,
         type: {
           def: {
             variant: {
@@ -2376,7 +3080,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 4,
+                      type: 28,
                     },
                   ],
                   index: 0,
@@ -2397,7 +3101,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 4,
+              type: 28,
             },
             {
               name: "E",
@@ -2405,6 +3109,37 @@ const contract = {
             },
           ],
           path: ["Result"],
+        },
+      },
+      {
+        id: 28,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "None",
+                },
+                {
+                  fields: [
+                    {
+                      type: 7,
+                    },
+                  ],
+                  index: 1,
+                  name: "Some",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 7,
+            },
+          ],
+          path: ["Option"],
         },
       },
       {
@@ -2460,7 +3195,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 0,
+                      type: 31,
                     },
                   ],
                   index: 1,
@@ -2472,7 +3207,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 0,
+              type: 31,
             },
           ],
           path: ["Option"],
@@ -2482,12 +3217,39 @@ const contract = {
         id: 31,
         type: {
           def: {
+            composite: {
+              fields: [
+                {
+                  name: "is_over",
+                  type: 2,
+                  typeName: "u8",
+                },
+                {
+                  name: "bet_number",
+                  type: 4,
+                  typeName: "u32",
+                },
+                {
+                  name: "bet_amount",
+                  type: 7,
+                  typeName: "Balance",
+                },
+              ],
+            },
+          },
+          path: ["bet_a0", "impls", "beta0_core", "data", "BetInformation"],
+        },
+      },
+      {
+        id: 32,
+        type: {
+          def: {
             variant: {
               variants: [
                 {
                   fields: [
                     {
-                      type: 32,
+                      type: 18,
                     },
                   ],
                   index: 0,
@@ -2508,7 +3270,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 32,
+              type: 18,
             },
             {
               name: "E",
@@ -2519,7 +3281,7 @@ const contract = {
         },
       },
       {
-        id: 32,
+        id: 33,
         type: {
           def: {
             variant: {
@@ -2527,7 +3289,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 34,
                     },
                   ],
                   index: 0,
@@ -2536,7 +3298,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 16,
+                      type: 9,
                     },
                   ],
                   index: 1,
@@ -2548,18 +3310,58 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 7,
+              type: 34,
             },
             {
               name: "E",
-              type: 16,
+              type: 9,
             },
           ],
           path: ["Result"],
         },
       },
       {
-        id: 33,
+        id: 34,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 5,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 14,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 5,
+            },
+            {
+              name: "E",
+              type: 14,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 35,
         type: {
           def: {
             composite: {
@@ -2575,7 +3377,7 @@ const contract = {
         },
       },
       {
-        id: 34,
+        id: 36,
         type: {
           def: {
             variant: {
@@ -2583,7 +3385,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 35,
+                      type: 37,
                     },
                   ],
                   index: 0,
@@ -2604,7 +3406,7 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 35,
+              type: 37,
             },
             {
               name: "E",
@@ -2615,7 +3417,7 @@ const contract = {
         },
       },
       {
-        id: 35,
+        id: 37,
         type: {
           def: {
             variant: {
@@ -2623,7 +3425,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 5,
                     },
                   ],
                   index: 0,
@@ -2632,7 +3434,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 36,
+                      type: 38,
                     },
                   ],
                   index: 1,
@@ -2644,18 +3446,18 @@ const contract = {
           params: [
             {
               name: "T",
-              type: 7,
+              type: 5,
             },
             {
               name: "E",
-              type: 36,
+              type: 38,
             },
           ],
           path: ["Result"],
         },
       },
       {
-        id: 36,
+        id: 38,
         type: {
           def: {
             variant: {
@@ -2677,7 +3479,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 16,
+                      type: 14,
                       typeName: "OwnableError",
                     },
                   ],
@@ -2687,7 +3489,7 @@ const contract = {
                 {
                   fields: [
                     {
-                      type: 37,
+                      type: 15,
                       typeName: "AccessControlError",
                     },
                   ],
@@ -2707,45 +3509,87 @@ const contract = {
         },
       },
       {
-        id: 37,
+        id: 39,
         type: {
           def: {
             variant: {
               variants: [
                 {
+                  fields: [
+                    {
+                      type: 40,
+                    },
+                  ],
                   index: 0,
-                  name: "InvalidCaller",
+                  name: "Ok",
                 },
                 {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
                   index: 1,
-                  name: "MissingRole",
-                },
-                {
-                  index: 2,
-                  name: "RoleRedundant",
+                  name: "Err",
                 },
               ],
             },
           },
-          path: [
-            "openbrush_contracts",
-            "traits",
-            "errors",
-            "access_control",
-            "AccessControlError",
+          params: [
+            {
+              name: "T",
+              type: 40,
+            },
+            {
+              name: "E",
+              type: 9,
+            },
           ],
+          path: ["Result"],
         },
       },
       {
-        id: 38,
+        id: 40,
         type: {
           def: {
-            primitive: "u64",
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 5,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 15,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
           },
+          params: [
+            {
+              name: "T",
+              type: 5,
+            },
+            {
+              name: "E",
+              type: 15,
+            },
+          ],
+          path: ["Result"],
         },
       },
       {
-        id: 39,
+        id: 41,
         type: {
           def: {
             variant: {},
