@@ -81,7 +81,19 @@ app.post("/getEventsByPlayer", async (req, res) => {
       })
       .slice(0, limit);
   }
-  return res.send({ status: "OK", ret: result });
+
+  // format result
+  const dataTable = result.map((result) => ({
+    player: result.player,
+    blockNumber: result.blockNumber,
+    betAmount: result.bet_amount,
+    type: result.is_over,
+    prediction: result.bet_number,
+    randomNumber: result.random_number,
+    wonAmount: result?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
 });
 
 // finalize
@@ -293,7 +305,19 @@ app.post("/getRareWins", async (req, res) => {
       })
       .slice(0, limit);
   }
-  return res.send({ status: "OK", ret: data });
+
+  // format result
+  const dataTable = data.map((data) => ({
+    player: data.player,
+    blockNumber: data.blockNumber,
+    betAmount: data.bet_amount,
+    type: data.is_over,
+    prediction: data.bet_number,
+    randomNumber: data.random_number,
+    wonAmount: data?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
 });
 
 app.post("/getEvents", async (req, res) => {
@@ -330,7 +354,19 @@ app.post("/getEvents", async (req, res) => {
       })
       .slice(0, limit);
   }
-  return res.send({ status: "OK", ret: result });
+
+   // format result
+   const dataTable = result.map((result) => ({
+    player: result.player,
+    blockNumber: result.blockNumber,
+    betAmount: result.bet_amount,
+    type: result.is_over,
+    prediction: result.bet_number,
+    randomNumber: result.random_number,
+    wonAmount: result?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
 });
 
 const connectDb = () => {
