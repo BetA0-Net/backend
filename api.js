@@ -89,13 +89,18 @@ app.post("/finalize", async (req, res) => {
   let { player } = req.body;
   let rd_number;
 
-  const random_contract = new ContractPromise(
-    api,
-    randomContract.CONTRACT_ABI,
-    randomContract.CONTRACT_ADDRESS
-  );
+  // handle random number
+  try {
+    const random_contract = new ContractPromise(
+      api,
+      randomContract.CONTRACT_ABI,
+      randomContract.CONTRACT_ADDRESS
+    );
 
-  if (random_contract) {
+    if (!random_contract || !player) {
+      return res.status(400).json({ error: "Invalid request" });
+    }
+
     const executeRd = await executeRandom(random_contract, player, 99);
 
     if (executeRd) {
@@ -105,11 +110,14 @@ app.post("/finalize", async (req, res) => {
       );
 
       if (randomNumber) rd_number = randomNumber;
-    }
-  } else {
-    rd_number = randomInt(0, 99);
+    } else rd_number = randomInt(0, 99);
+  } catch (error) {
+    onsole.error("Error:", error);
+    console.log("error", error);
+    return res.status(500).json({ error: "An error occurred" });
   }
 
+  // handle finalize
   try {
     const contract_data = new ContractPromise(
       api,
