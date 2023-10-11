@@ -44,6 +44,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 
+app.get('/api', (req, res) => {
+  res.send('Wellcome BET AZ!')
+})
+
 app.post("/getEventsByPlayer", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
   let player = req.body.player;
@@ -369,10 +373,10 @@ app.post("/getEvents", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 3000;
 const DATABASE_HOST = process.env.MONGO_HOST || '127.0.0.1';
 const DATABASE_PORT = process.env.MONGO_PORT || 27017;
-const DATABASE_NAME = process.env.MONGO_DB_NAME || a0bet;
+const DATABASE_NAME = process.env.MONGO_DB_NAME;
 const CONNECTION_STRING = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}`;
 
 const connectDb = () => {
@@ -385,8 +389,8 @@ const connectDb = () => {
 
 connectDb().then(async () => {
   let httpsServer = https.createServer(credentials, app);
-  httpsServer.listen(PORT, () => {
-    console.log(`BET AZ API listening on port 443!`);
+  app.listen(PORT, () => {
+    console.log(`BET AZ API listening on port ${PORT}!`);
   });
   // await checkSBData();
   // await checkAPY();
@@ -397,4 +401,3 @@ connectDb().then(async () => {
   // setInterval(checkAPY, 1 * 60 * 60 * 1000);
   // setInterval(updateSupply, 24 * 60 * 60 * 1000);
 });
-
