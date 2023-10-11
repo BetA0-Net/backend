@@ -369,16 +369,24 @@ app.post("/getEvents", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
+const PORT = process.env.PORT || 443;
+const DATABASE_HOST = process.env.MONGO_HOST || '127.0.0.1';
+const DATABASE_PORT = process.env.MONGO_PORT || 27017;
+const DATABASE_NAME = process.env.MONGO_DB_NAME || a0bet;
+const CONNECTION_STRING = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}`;
+
 const connectDb = () => {
-  return mongoose.connect("mongodb://127.0.0.1:27017/a0bet", {
-    useNewUrlParser: true,
+  return mongoose.connect(CONNECTION_STRING, {
+      dbName: DATABASE_NAME,
+      maxPoolSize: 50,
+      useNewUrlParser: true,
   });
 };
 
 connectDb().then(async () => {
   let httpsServer = https.createServer(credentials, app);
-  httpsServer.listen(443, () => {
-    console.log(`ARTZERO API listening on port 443!`);
+  httpsServer.listen(PORT, () => {
+    console.log(`BET AZ API listening on port 443!`);
   });
   // await checkSBData();
   // await checkAPY();
@@ -389,3 +397,4 @@ connectDb().then(async () => {
   // setInterval(checkAPY, 1 * 60 * 60 * 1000);
   // setInterval(updateSupply, 24 * 60 * 60 * 1000);
 });
+
