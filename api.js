@@ -1,8 +1,8 @@
 let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
-let { contract } = require("./contract");
-let { randomContract } = require("./rd_contract");
+let { contract } = require("./contracts/core_contract");
+let { randomContract } = require("./contracts/rd_contract");
 let {
   randomInt,
   getEstimatedGas,
@@ -11,9 +11,45 @@ let {
 } = require("./utils");
 require("dotenv").config();
 
-let socket = "wss://ws.test.azero.dev";
+/****************** Connect smartnet BETAZ ***********************/
+let socket = process.env.PROVIDER_URL;
 const provider = new WsProvider(socket);
 const api = new ApiPromise({ provider, rpc: jsonrpc });
+let betaz_core_contract;
+let random_contract;
+try {
+  api.on("connected", () => {
+    api.isReady.then(() => {
+      console.log("Smartnet BETAZ Connected");
+    });
+  });
+
+  api.on("ready", () => {
+    console.log("Smartnet BETAZ Ready");
+    const rd_contract = new ContractPromise(
+      api,
+      randomContract.CONTRACT_ABI,
+      randomContract.CONTRACT_ADDRESS
+    );
+    console.log("Random Contract is ready");
+    random_contract = rd_contract;
+
+    const core_contract = new ContractPromise(
+      api,
+      contract.CONTRACT_ABI,
+      contract.CONTRACT_ADDRESS
+    );
+    console.log("core Contract is ready");
+    betaz_core_contract = core_contract;
+  });
+
+  api.on("error", (err) => {
+    console.log("error", err);
+  });
+} catch (err) {
+  console.log(err);
+}
+/****************** End connect smartnet BETAZ ***********************/
 
 let mongoose = require("mongoose");
 let database = require("./database.js");
@@ -44,9 +80,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 
-app.get('/api', (req, res) => {
-  res.send('Wellcome BET AZ!')
-})
+app.get("/api", (req, res) => {
+  res.send("Wellcome BET AZ!");
+});
 
 app.post("/getEventsByPlayer", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
@@ -100,23 +136,110 @@ app.post("/getEventsByPlayer", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
+app.post("/getRareWins", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  let limit = req.body.limit;
+  let offset = req.body.offset;
+  let sort = req.body.sort;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+  if (!sort) sort = -1;
+
+  let data = await database.WinEvent.find({
+    $where: "this.win_amount > 10 * this.bet_amount",
+  })
+    .sort({ blockNumber: parseInt(sort) })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  if (sort) {
+    data = data
+      .sort(function (a, b) {
+        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
+      })
+      .slice(0, limit);
+  } else {
+    data = data
+      .sort(function (a, b) {
+        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
+      })
+      .slice(0, limit);
+  }
+
+  // format result
+  const dataTable = data.map((data) => ({
+    player: data.player,
+    blockNumber: data.blockNumber,
+    betAmount: data.bet_amount,
+    type: data.is_over,
+    prediction: data.bet_number,
+    randomNumber: data.random_number,
+    wonAmount: data?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
+});
+
+app.post("/getEvents", async (req, res) => {
+  debugger;
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  let limit = req.body.limit;
+  let offset = req.body.offset;
+  let sort = req.body.sort;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+  if (!sort) sort = -1;
+
+  let data = await database.WinEvent.find()
+    .sort({ blockNumber: parseInt(sort) })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+  let data1 = await database.LoseEvent.find()
+    .sort({ blockNumber: parseInt(sort) })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  var result = data.concat(data1);
+  //console.log(player,result);
+  if (sort) {
+    result = result
+      .sort(function (a, b) {
+        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
+      })
+      .slice(0, limit);
+  } else {
+    result = result
+      .sort(function (a, b) {
+        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
+      })
+      .slice(0, limit);
+  }
+
+  // format result
+  const dataTable = result.map((result) => ({
+    player: result.player,
+    blockNumber: result.blockNumber,
+    betAmount: result.bet_amount,
+    type: result.is_over,
+    prediction: result.bet_number,
+    randomNumber: result.random_number,
+    wonAmount: result?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
+});
+
 // finalize
 app.post("/finalize", async (req, res) => {
   let { player } = req.body;
   let rd_number;
 
+  if (!random_contract || !betaz_core_contract || !player) {
+    return res.status(400).json({ error: "Invalid request" });
+  }
+
   // handle random number
   try {
-    const random_contract = new ContractPromise(
-      api,
-      randomContract.CONTRACT_ABI,
-      randomContract.CONTRACT_ADDRESS
-    );
-
-    if (!random_contract || !player) {
-      return res.status(400).json({ error: "Invalid request" });
-    }
-
     const executeRd = await executeRandom(random_contract, player, 99);
 
     if (executeRd) {
@@ -125,26 +248,16 @@ app.post("/finalize", async (req, res) => {
         player
       );
 
-      if (randomNumber) rd_number = randomNumber;
+      if (randomNumber !== null) rd_number = randomNumber;
     } else rd_number = randomInt(0, 99);
   } catch (error) {
     onsole.error("Error:", error);
     console.log("error", error);
-    return res.status(500).json({ error: "An error occurred" });
+    return res.status(500).json({ error: "An error occurred random" });
   }
 
   // handle finalize
   try {
-    const contract_data = new ContractPromise(
-      api,
-      contract.CONTRACT_ABI,
-      contract.CONTRACT_ADDRESS
-    );
-
-    if (!contract_data || !player) {
-      return res.status(400).json({ error: "Invalid request" });
-    }
-
     let gasLimit;
     const value = 0;
 
@@ -154,14 +267,14 @@ app.post("/finalize", async (req, res) => {
     let unsubscribe;
     gasLimit = await getEstimatedGas(
       keypair.address,
-      contract_data,
+      betaz_core_contract,
       value,
       "finalize",
       player,
       rd_number
     );
 
-    await contract_data.tx
+    await betaz_core_contract.tx
       .finalize({ gasLimit, value }, player, rd_number)
       .signAndSend(keypair, ({ status, events, txHash }) => {
         if (status.isInBlock || status.isFinalized) {
@@ -276,114 +389,22 @@ app.post("/finalize", async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     console.log("error", error);
-    return res.status(500).json({ error: "An error occurred" });
+    return res.status(500).json({ error: "An error occurred finalize" });
   }
 });
 
-app.post("/getRareWins", async (req, res) => {
-  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
-  let limit = req.body.limit;
-  let offset = req.body.offset;
-  let sort = req.body.sort;
-  if (!limit) limit = 15;
-  if (!offset) offset = 0;
-  if (!sort) sort = -1;
-
-  let data = await database.WinEvent.find({
-    $where: "this.win_amount > 10 * this.bet_amount",
-  })
-    .sort({ blockNumber: parseInt(sort) })
-    .skip(parseInt(offset))
-    .limit(parseInt(limit));
-
-  if (sort) {
-    data = data
-      .sort(function (a, b) {
-        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
-      })
-      .slice(0, limit);
-  } else {
-    data = data
-      .sort(function (a, b) {
-        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
-      })
-      .slice(0, limit);
-  }
-
-  // format result
-  const dataTable = data.map((data) => ({
-    player: data.player,
-    blockNumber: data.blockNumber,
-    betAmount: data.bet_amount,
-    type: data.is_over,
-    prediction: data.bet_number,
-    randomNumber: data.random_number,
-    wonAmount: data?.win_amount || 0,
-  }));
-
-  return res.send({ status: "OK", ret: dataTable });
-});
-
-app.post("/getEvents", async (req, res) => {
-  debugger;
-  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
-  let limit = req.body.limit;
-  let offset = req.body.offset;
-  let sort = req.body.sort;
-  if (!limit) limit = 15;
-  if (!offset) offset = 0;
-  if (!sort) sort = -1;
-
-  let data = await database.WinEvent.find()
-    .sort({ blockNumber: parseInt(sort) })
-    .skip(parseInt(offset))
-    .limit(parseInt(limit));
-  let data1 = await database.LoseEvent.find()
-    .sort({ blockNumber: parseInt(sort) })
-    .skip(parseInt(offset))
-    .limit(parseInt(limit));
-
-  var result = data.concat(data1);
-  //console.log(player,result);
-  if (sort) {
-    result = result
-      .sort(function (a, b) {
-        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
-      })
-      .slice(0, limit);
-  } else {
-    result = result
-      .sort(function (a, b) {
-        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
-      })
-      .slice(0, limit);
-  }
-
-   // format result
-   const dataTable = result.map((result) => ({
-    player: result.player,
-    blockNumber: result.blockNumber,
-    betAmount: result.bet_amount,
-    type: result.is_over,
-    prediction: result.bet_number,
-    randomNumber: result.random_number,
-    wonAmount: result?.win_amount || 0,
-  }));
-
-  return res.send({ status: "OK", ret: dataTable });
-});
 
 const PORT = process.env.PORT || 3000;
-const DATABASE_HOST = process.env.MONGO_HOST || '127.0.0.1';
+const DATABASE_HOST = process.env.MONGO_HOST || "127.0.0.1";
 const DATABASE_PORT = process.env.MONGO_PORT || 27017;
 const DATABASE_NAME = process.env.MONGO_DB_NAME;
 const CONNECTION_STRING = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}`;
 
 const connectDb = () => {
   return mongoose.connect(CONNECTION_STRING, {
-      dbName: DATABASE_NAME,
-      maxPoolSize: 50,
-      useNewUrlParser: true,
+    dbName: DATABASE_NAME,
+    maxPoolSize: 50,
+    useNewUrlParser: true,
   });
 };
 
