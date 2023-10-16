@@ -57,6 +57,7 @@ let database = require("./database.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const express = require("express");
+const nodemailer = require("nodemailer");
 let MobileDetect = require("mobile-detect");
 
 let fs = require("fs");
@@ -393,6 +394,48 @@ app.post("/finalize", async (req, res) => {
   }
 });
 
+// send mail
+const adminEmail = process.env.ADMIN_EMAIL.toString();
+const adminEmailPass = process.env.ADMIN_EMAIL_PASS.toString();
+app.post("/sendEmail", async (req, res) => {
+  const { email, subject, text } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: adminEmail,
+      pass: adminEmailPass,
+    },
+  });
+
+  const mailOptions = {
+    from: adminEmail,
+    to: email,
+    subject: subject,
+    text: text,
+  };
+
+  const existingEmail = await database.EmailSubscribe.findOne({
+    email: email,
+  });
+  if (!existingEmail) {
+    await database.EmailSubscribe.create({ email });
+  }
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send("Error sending email");
+    } else {
+      console.log("Email sent: " + info.response);
+      res.send({
+        status: "OK",
+        ret: {
+          email: email,
+        },
+      });
+    }
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 const DATABASE_HOST = process.env.MONGO_HOST || "127.0.0.1";
@@ -400,6 +443,7 @@ const DATABASE_PORT = process.env.MONGO_PORT || 27017;
 const DATABASE_NAME = process.env.MONGO_DB_NAME;
 const CONNECTION_STRING = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}`;
 
+mongoose.set("strictQuery", false);
 const connectDb = () => {
   return mongoose.connect(CONNECTION_STRING, {
     dbName: DATABASE_NAME,
