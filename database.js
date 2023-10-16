@@ -51,9 +51,14 @@ const ScannedBlocksSchema = new mongoose.Schema({
     type: Number,
   }
 });
+const EmailSubscribeSchema = new mongoose.Schema({
+  email: {
+    type: String,
+  },
+});
 module.exports = {
   ScannedBlocks:mongoose.model('ScannedBlocks', ScannedBlocksSchema),
   LoseEvent:mongoose.model('LoseEvent', LoseEventSchema),
   WinEvent:mongoose.model('WinEvent', WinEventSchema),
-
+  EmailSubscribe: mongoose.model('EmailSubscribe', EmailSubscribeSchema)
 };
