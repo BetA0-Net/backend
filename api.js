@@ -400,6 +400,7 @@ const DATABASE_PORT = process.env.MONGO_PORT || 27017;
 const DATABASE_NAME = process.env.MONGO_DB_NAME;
 const CONNECTION_STRING = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}`;
 
+mongoose.set("strictQuery", false);
 const connectDb = () => {
   return mongoose.connect(CONNECTION_STRING, {
     dbName: DATABASE_NAME,
