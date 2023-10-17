@@ -285,7 +285,6 @@ app.post("/finalize", async (req, res) => {
                 const [accId, bytes] = data.map((data, _) => data).slice(0, 2);
 
                 const contract_address = accId.toString();
-
                 if (contract_address === contract.CONTRACT_ADDRESS) {
                   const abi_contract = new Abi(contract.CONTRACT_ABI);
 
@@ -346,10 +345,10 @@ app.post("/finalize", async (req, res) => {
                           random_number: eventValues[2],
                           bet_number: eventValues[3],
                           bet_amount: eventValues[4]
-                            ? eventValues[4] / 10 ** 12
+                            ? eventValues[4] / 10 ** 18
                             : 0,
                           win_amount: eventValues[5]
-                            ? eventValues[5] / 10 ** 12
+                            ? eventValues[5] / 10 ** 18
                             : 0,
                         };
                         let found = await database.WinEvent.findOne(obj);

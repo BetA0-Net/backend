@@ -1,8 +1,8 @@
 const randomContract = {
-  CONTRACT_ADDRESS: "5Daz5TkSeWG3qxRYL728Tjj6Z47X99XJxT8KR9zLxzrPMgEr",
+  CONTRACT_ADDRESS: "apgMv5KdMaNpBfQ52D1Pq7fiCKjP478bZcFnAo9Ko2ZwKmy",
   CONTRACT_ABI: {
     source: {
-      hash: "0xdb3afb3243b7cb70a875d3bf97b5dd7a00eedf2b69178f1dca7ae05ca1b437a6",
+      hash: "0x26ae82e728dcf3bb0972beb7335a144138dc89dce9bef294c61ea50c3385997f",
       language: "ink! 4.3.0",
       compiler: "rustc 1.70.0-nightly",
       build_info: {
