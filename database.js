@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+let mongoose = require("mongoose");
 
 const WinEventSchema = new mongoose.Schema({
   blockNumber: {
@@ -21,7 +21,7 @@ const WinEventSchema = new mongoose.Schema({
   },
   win_amount: {
     type: Number,
-  }
+  },
 });
 const LoseEventSchema = new mongoose.Schema({
   blockNumber: {
@@ -41,7 +41,7 @@ const LoseEventSchema = new mongoose.Schema({
   },
   bet_amount: {
     type: Number,
-  }
+  },
 });
 const ScannedBlocksSchema = new mongoose.Schema({
   lastScanned: {
@@ -49,16 +49,19 @@ const ScannedBlocksSchema = new mongoose.Schema({
   },
   blockNumber: {
     type: Number,
-  }
-});
-const EmailSubscribeSchema = new mongoose.Schema({
-  email: {
-    type: String,
   },
 });
+const EmailSubscribeSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 module.exports = {
-  ScannedBlocks:mongoose.model('ScannedBlocks', ScannedBlocksSchema),
-  LoseEvent:mongoose.model('LoseEvent', LoseEventSchema),
-  WinEvent:mongoose.model('WinEvent', WinEventSchema),
-  EmailSubscribe: mongoose.model('EmailSubscribe', EmailSubscribeSchema)
+  ScannedBlocks: mongoose.model("ScannedBlocks", ScannedBlocksSchema),
+  LoseEvent: mongoose.model("LoseEvent", LoseEventSchema),
+  WinEvent: mongoose.model("WinEvent", WinEventSchema),
+  EmailSubscribe: mongoose.model("EmailSubscribe", EmailSubscribeSchema),
 };

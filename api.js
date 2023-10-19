@@ -137,6 +137,26 @@ app.post("/getEventsByPlayer", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
+app.post("/getSubcribeEmail", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  let limit = req.body.limit;
+  let offset = req.body.offset;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+
+  let data = await database.EmailSubscribe.find()
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  // format result
+  const dataTable = data.map((data) => ({
+    email: data.email,
+    subcribeAt: data.createdAt,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
+});
+
 app.post("/getRareWins", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
   let limit = req.body.limit;
