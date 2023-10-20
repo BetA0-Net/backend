@@ -85,6 +85,8 @@ app.get("/api", (req, res) => {
   res.send("Wellcome BET AZ!");
 });
 
+app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
+
 app.post("/getEventsByPlayer", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
   let player = req.body.player;
