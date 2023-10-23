@@ -51,11 +51,14 @@ const ScannedBlocksSchema = new mongoose.Schema({
     type: Number,
   }
 });
-const EmailSubscribeSchema = new mongoose.Schema({
-  email: {
-    type: String,
+const EmailSubscribeSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+    },
   },
-});
+  { timestamps: true }
+);
 module.exports = {
   ScannedBlocks:mongoose.model('ScannedBlocks', ScannedBlocksSchema),
   LoseEvent:mongoose.model('LoseEvent', LoseEventSchema),
