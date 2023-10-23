@@ -466,7 +466,7 @@ const connectDb = () => {
 };
 
 connectDb().then(async () => {
-  let httpsServer = https.createServer(credentials, app);
+  // let httpsServer = https.createServer(credentials, app);
   app.listen(PORT, () => {
     console.log(`BET AZ API listening on port ${PORT}!`);
   });
