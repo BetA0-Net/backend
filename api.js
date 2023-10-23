@@ -4,11 +4,11 @@ const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
 let { randomContract } = require("./contracts/rd_contract");
 let {
-  randomInt,
-  getEstimatedGas,
-  getRandomNumberByContract,
+  setBetazRandomContract,
   executeRandom,
-} = require("./utils");
+  getRandomNumberByContract,
+} = require("./contracts/rd_contract_calls");
+let { randomInt, getEstimatedGas } = require("./utils");
 require("dotenv").config();
 
 /****************** Connect smartnet BETAZ ***********************/
@@ -16,7 +16,6 @@ let socket = process.env.PROVIDER_URL;
 const provider = new WsProvider(socket);
 const api = new ApiPromise({ provider, rpc: jsonrpc });
 let betaz_core_contract;
-let random_contract;
 try {
   api.on("connected", () => {
     api.isReady.then(() => {
@@ -26,13 +25,8 @@ try {
 
   api.on("ready", () => {
     console.log("Smartnet BETAZ Ready");
-    const rd_contract = new ContractPromise(
-      api,
-      randomContract.CONTRACT_ABI,
-      randomContract.CONTRACT_ADDRESS
-    );
+    setBetazRandomContract(api, randomContract);
     console.log("Random Contract is ready");
-    random_contract = rd_contract;
 
     const core_contract = new ContractPromise(
       api,
@@ -85,6 +79,8 @@ app.get("/api", (req, res) => {
   res.send("Wellcome BET AZ!");
 });
 
+app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
+
 app.post("/getEventsByPlayer", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
   let player = req.body.player;
@@ -98,16 +94,65 @@ app.post("/getEventsByPlayer", async (req, res) => {
     return res.send({ status: "FAILED", message: "Invalid Address" });
   }
 
-  let data = await database.WinEvent.find({ player: player })
+  let winData = await database.WinEvent.find({ player: player })
     .sort({ blockNumber: parseInt(sort) })
     .skip(parseInt(offset))
     .limit(parseInt(limit));
-  let data1 = await database.LoseEvent.find({ player: player })
+  let loseData = await database.LoseEvent.find({ player: player })
     .sort({ blockNumber: parseInt(sort) })
     .skip(parseInt(offset))
     .limit(parseInt(limit));
 
-  var result = data.concat(data1);
+  var result = winData.concat(loseData);
+  //console.log(player,result);
+  if (sort) {
+    result = result
+      .sort(function (a, b) {
+        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
+      })
+      .slice(0, limit);
+  } else {
+    result = result
+      .sort(function (a, b) {
+        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
+      })
+      .slice(0, limit);
+  }
+
+  // format result
+  const dataTable = result.map((result) => ({
+    player: result.player,
+    blockNumber: result.blockNumber,
+    betAmount: result.bet_amount,
+    type: result.is_over,
+    prediction: result.bet_number,
+    randomNumber: result.random_number,
+    wonAmount: result?.win_amount || 0,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
+});
+
+app.post("/getEvents", async (req, res) => {
+  debugger;
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  let limit = req.body.limit;
+  let offset = req.body.offset;
+  let sort = req.body.sort;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+  if (!sort) sort = -1;
+
+  let winData = await database.WinEvent.find()
+    .sort({ blockNumber: parseInt(sort) })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+  let loseData = await database.LoseEvent.find()
+    .sort({ blockNumber: parseInt(sort) })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  var result = winData.concat(loseData);
   //console.log(player,result);
   if (sort) {
     result = result
@@ -181,73 +226,21 @@ app.post("/getRareWins", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
-app.post("/getEvents", async (req, res) => {
-  debugger;
-  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
-  let limit = req.body.limit;
-  let offset = req.body.offset;
-  let sort = req.body.sort;
-  if (!limit) limit = 15;
-  if (!offset) offset = 0;
-  if (!sort) sort = -1;
-
-  let data = await database.WinEvent.find()
-    .sort({ blockNumber: parseInt(sort) })
-    .skip(parseInt(offset))
-    .limit(parseInt(limit));
-  let data1 = await database.LoseEvent.find()
-    .sort({ blockNumber: parseInt(sort) })
-    .skip(parseInt(offset))
-    .limit(parseInt(limit));
-
-  var result = data.concat(data1);
-  //console.log(player,result);
-  if (sort) {
-    result = result
-      .sort(function (a, b) {
-        return parseInt(b.blockNumber) - parseInt(a.blockNumber);
-      })
-      .slice(0, limit);
-  } else {
-    result = result
-      .sort(function (a, b) {
-        return parseInt(a.blockNumber) - parseInt(b.blockNumber);
-      })
-      .slice(0, limit);
-  }
-
-  // format result
-  const dataTable = result.map((result) => ({
-    player: result.player,
-    blockNumber: result.blockNumber,
-    betAmount: result.bet_amount,
-    type: result.is_over,
-    prediction: result.bet_number,
-    randomNumber: result.random_number,
-    wonAmount: result?.win_amount || 0,
-  }));
-
-  return res.send({ status: "OK", ret: dataTable });
-});
-
 // finalize
 app.post("/finalize", async (req, res) => {
   let { player } = req.body;
   let rd_number;
 
-  if (!random_contract || !betaz_core_contract || !player) {
+  if (!betaz_core_contract || !player) {
     return res.status(400).json({ error: "Invalid request" });
   }
 
   // handle random number
   try {
-    const executeRd = await executeRandom(random_contract, player, 99);
+    const executeRd = await executeRandom(player, 99);
 
     if (executeRd) {
-      const randomNumber = await getRandomNumberByContract(
-        random_contract,
-        player
-      );
+      const randomNumber = await getRandomNumberByContract(player);
 
       if (randomNumber !== null) rd_number = randomNumber;
     } else rd_number = randomInt(0, 99);
@@ -285,6 +278,7 @@ app.post("/finalize", async (req, res) => {
                 const [accId, bytes] = data.map((data, _) => data).slice(0, 2);
 
                 const contract_address = accId.toString();
+
                 if (contract_address === contract.CONTRACT_ADDRESS) {
                   const abi_contract = new Abi(contract.CONTRACT_ABI);
 
@@ -317,7 +311,7 @@ app.post("/finalize", async (req, res) => {
                           random_number: eventValues[2],
                           bet_number: eventValues[3],
                           bet_amount: eventValues[4]
-                            ? eventValues[4] / 10 ** 12
+                            ? eventValues[4] / 10 ** 18
                             : 0,
                         };
                         let found = await database.LoseEvent.findOne(obj);
@@ -436,6 +430,26 @@ app.post("/sendEmail", async (req, res) => {
   });
 });
 
+app.post("/getSubcribeEmail", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  let limit = req.body.limit;
+  let offset = req.body.offset;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+
+  let data = await database.EmailSubscribe.find()
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  // format result
+  const dataTable = data.map((data) => ({
+    email: data.email,
+    subcribeAt: data.createdAt,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
+});
+
 const PORT = process.env.PORT || 3000;
 const DATABASE_HOST = process.env.MONGO_HOST || "127.0.0.1";
 const DATABASE_PORT = process.env.MONGO_PORT || 27017;
@@ -452,7 +466,7 @@ const connectDb = () => {
 };
 
 connectDb().then(async () => {
-  let httpsServer = https.createServer(credentials, app);
+  // let httpsServer = https.createServer(credentials, app);
   app.listen(PORT, () => {
     console.log(`BET AZ API listening on port ${PORT}!`);
   });
