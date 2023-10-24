@@ -450,6 +450,17 @@ app.post("/getSubcribeEmail", async (req, res) => {
   return res.send({ status: "OK", ret: dataTable });
 });
 
+app.post("/getEmailExist", async (req, res) => {
+  const { email } = req.body;
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+
+  const existingEmail = await database.EmailSubscribe.findOne({
+    email: email,
+  });
+
+  return res.send({ status: "OK", ret: existingEmail?.email });
+});
+
 const PORT = process.env.PORT || 3000;
 const DATABASE_HOST = process.env.MONGO_HOST || "127.0.0.1";
 const DATABASE_PORT = process.env.MONGO_PORT || 27017;
