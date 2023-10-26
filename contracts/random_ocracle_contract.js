@@ -1,13 +1,13 @@
 const randomContract = {
-  CONTRACT_ADDRESS: "5Daz5TkSeWG3qxRYL728Tjj6Z47X99XJxT8KR9zLxzrPMgEr",
+  CONTRACT_ADDRESS: "5HJK4DunhQD82uaVn2rN1C12RajSRjpyyZtMzTJ4TdF6mQDq",
   CONTRACT_ABI: {
     source: {
-      hash: "0xdb3afb3243b7cb70a875d3bf97b5dd7a00eedf2b69178f1dca7ae05ca1b437a6",
+      hash: "0x9e81f1fe42ebaa45780d4561c86c63f4b023468dc6663c282b9e857ad6fb80fd",
       language: "ink! 4.3.0",
-      compiler: "rustc 1.70.0-nightly",
+      compiler: "rustc 1.75.0-nightly",
       build_info: {
         build_mode: "Debug",
-        cargo_contract_version: "2.1.0",
+        cargo_contract_version: "3.2.0",
         rust_toolchain: "nightly-x86_64-unknown-linux-gnu",
         wasm_opt_settings: {
           keep_debug_symbols: false,
@@ -16,19 +16,33 @@ const randomContract = {
       },
     },
     contract: {
-      name: "random_number_generator_contract",
-      version: "1.0.0",
-      authors: ["bet_a0 <admin@betA0.net>"],
+      name: "dia-oracle-example-randomness",
+      version: "0.1.0",
+      authors: ["nitin.gurbani@diadata.org"],
     },
     spec: {
       constructors: [
         {
           args: [
             {
+              label: "oracle_address",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
               label: "admin_address",
               type: {
                 displayName: ["AccountId"],
-                type: 2,
+                type: 0,
+              },
+            },
+            {
+              label: "tmp",
+              type: {
+                displayName: ["u64"],
+                type: 3,
               },
             },
           ],
@@ -38,7 +52,7 @@ const randomContract = {
           payable: false,
           returnType: {
             displayName: ["ink_primitives", "ConstructorResult"],
-            type: 5,
+            type: 4,
           },
           selector: "0x9bae9d5e",
         },
@@ -47,28 +61,28 @@ const randomContract = {
       environment: {
         accountId: {
           displayName: ["AccountId"],
-          type: 2,
+          type: 0,
         },
         balance: {
           displayName: ["Balance"],
-          type: 15,
+          type: 20,
         },
         blockNumber: {
           displayName: ["BlockNumber"],
-          type: 1,
+          type: 22,
         },
         chainExtension: {
           displayName: ["ChainExtension"],
-          type: 17,
+          type: 23,
         },
         hash: {
           displayName: ["Hash"],
-          type: 16,
+          type: 21,
         },
         maxEventTopics: 4,
         timestamp: {
           displayName: ["Timestamp"],
-          type: 0,
+          type: 3,
         },
       },
       events: [
@@ -77,18 +91,9 @@ const randomContract = {
             {
               docs: [],
               indexed: true,
-              label: "time_stamp",
+              label: "player",
               type: {
-                displayName: ["Timestamp"],
-                type: 0,
-              },
-            },
-            {
-              docs: [],
-              indexed: true,
-              label: "request_id",
-              type: {
-                displayName: ["u64"],
+                displayName: ["AccountId"],
                 type: 0,
               },
             },
@@ -97,8 +102,17 @@ const randomContract = {
               indexed: true,
               label: "random_number",
               type: {
-                displayName: ["u32"],
-                type: 1,
+                displayName: ["u8"],
+                type: 2,
+              },
+            },
+            {
+              docs: [],
+              indexed: true,
+              label: "bet_number",
+              type: {
+                displayName: ["u8"],
+                type: 2,
               },
             },
           ],
@@ -108,37 +122,16 @@ const randomContract = {
       ],
       lang_error: {
         displayName: ["ink", "LangError"],
-        type: 7,
+        type: 6,
       },
       messages: [
-        {
-          args: [
-            {
-              label: "max_value",
-              type: {
-                displayName: ["u8"],
-                type: 4,
-              },
-            },
-          ],
-          default: false,
-          docs: [],
-          label: "random",
-          mutates: true,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 8,
-          },
-          selector: "0xca976ce8",
-        },
         {
           args: [
             {
               label: "account_id",
               type: {
                 displayName: ["AccountId"],
-                type: 2,
+                type: 0,
               },
             },
           ],
@@ -149,9 +142,65 @@ const randomContract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 8,
+            type: 7,
           },
           selector: "0x107e33ea",
+        },
+        {
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+            {
+              label: "max_value",
+              type: {
+                displayName: ["u8"],
+                type: 2,
+              },
+            },
+            {
+              label: "bet_number",
+              type: {
+                displayName: ["u8"],
+                type: 2,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "random_number",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 7,
+          },
+          selector: "0xe512c463",
+        },
+        {
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "commit_player",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 7,
+          },
+          selector: "0xd4770c58",
         },
         {
           args: [
@@ -159,7 +208,7 @@ const randomContract = {
               label: "account_id",
               type: {
                 displayName: ["AccountId"],
-                type: 2,
+                type: 0,
               },
             },
           ],
@@ -170,9 +219,30 @@ const randomContract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 8,
+            type: 7,
           },
           selector: "0x798dcad5",
+        },
+        {
+          args: [
+            {
+              label: "tmp",
+              type: {
+                displayName: ["u64"],
+                type: 3,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "set_tmp",
+          mutates: true,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 7,
+          },
+          selector: "0xcd49cf32",
         },
         {
           args: [],
@@ -183,48 +253,85 @@ const randomContract = {
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 11,
+            type: 10,
           },
           selector: "0x57b8a8a7",
         },
         {
-          args: [],
+          args: [
+            {
+              label: "key",
+              type: {
+                displayName: ["u64"],
+                type: 3,
+              },
+            },
+          ],
           default: false,
           docs: [],
-          label: "get_last_request_id",
+          label: "get",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 13,
+            type: 12,
           },
-          selector: "0xa5222c7d",
+          selector: "0x2f865bd9",
+        },
+        {
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "get_random_value_for_player",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 15,
+          },
+          selector: "0xcfeabaa1",
+        },
+        {
+          args: [
+            {
+              label: "player",
+              type: {
+                displayName: ["AccountId"],
+                type: 0,
+              },
+            },
+          ],
+          default: false,
+          docs: [],
+          label: "get_last_round_for_player",
+          mutates: false,
+          payable: false,
+          returnType: {
+            displayName: ["ink", "MessageResult"],
+            type: 17,
+          },
+          selector: "0x3623c777",
         },
         {
           args: [],
           default: false,
           docs: [],
-          label: "get_last_time_stamp_random",
+          label: "get_tmp",
           mutates: false,
           payable: false,
           returnType: {
             displayName: ["ink", "MessageResult"],
-            type: 13,
+            type: 19,
           },
-          selector: "0x32364da2",
-        },
-        {
-          args: [],
-          default: false,
-          docs: [],
-          label: "get_last_rand_rumber",
-          mutates: false,
-          payable: false,
-          returnType: {
-            displayName: ["ink", "MessageResult"],
-            type: 14,
-          },
-          selector: "0xf19e9b85",
+          selector: "0x46e85079",
         },
       ],
     },
@@ -235,39 +342,22 @@ const randomContract = {
             fields: [
               {
                 layout: {
-                  leaf: {
-                    key: "0x00000000",
-                    ty: 0,
+                  struct: {
+                    fields: [
+                      {
+                        layout: {
+                          leaf: {
+                            key: "0x00000000",
+                            ty: 0,
+                          },
+                        },
+                        name: "account_id",
+                      },
+                    ],
+                    name: "__ink_TraitCallBuilderRandomOracleGetter",
                   },
                 },
-                name: "salt",
-              },
-              {
-                layout: {
-                  leaf: {
-                    key: "0x00000000",
-                    ty: 0,
-                  },
-                },
-                name: "time_stamp",
-              },
-              {
-                layout: {
-                  leaf: {
-                    key: "0x00000000",
-                    ty: 0,
-                  },
-                },
-                name: "request_id",
-              },
-              {
-                layout: {
-                  leaf: {
-                    key: "0x00000000",
-                    ty: 1,
-                  },
-                },
-                name: "random_number",
+                name: "oracle",
               },
               {
                 layout: {
@@ -285,7 +375,7 @@ const randomContract = {
                             layout: {
                               leaf: {
                                 key: "0x00000000",
-                                ty: 2,
+                                ty: 0,
                               },
                             },
                             name: "0",
@@ -314,7 +404,7 @@ const randomContract = {
                             layout: {
                               leaf: {
                                 key: "0x00000000",
-                                ty: 2,
+                                ty: 0,
                               },
                             },
                             name: "0",
@@ -327,8 +417,45 @@ const randomContract = {
                 },
                 name: "owner",
               },
+              {
+                layout: {
+                  root: {
+                    layout: {
+                      leaf: {
+                        key: "0xaeb82c47",
+                        ty: 2,
+                      },
+                    },
+                    root_key: "0xaeb82c47",
+                  },
+                },
+                name: "randoms",
+              },
+              {
+                layout: {
+                  leaf: {
+                    key: "0x00000000",
+                    ty: 3,
+                  },
+                },
+                name: "tmp",
+              },
+              {
+                layout: {
+                  root: {
+                    layout: {
+                      leaf: {
+                        key: "0xb7d956f8",
+                        ty: 3,
+                      },
+                    },
+                    root_key: "0xb7d956f8",
+                  },
+                },
+                name: "latest_round",
+              },
             ],
-            name: "RandomNumberGeneratorContract",
+            name: "RandomOracleExample",
           },
         },
         root_key: "0x00000000",
@@ -339,26 +466,10 @@ const randomContract = {
         id: 0,
         type: {
           def: {
-            primitive: "u64",
-          },
-        },
-      },
-      {
-        id: 1,
-        type: {
-          def: {
-            primitive: "u32",
-          },
-        },
-      },
-      {
-        id: 2,
-        type: {
-          def: {
             composite: {
               fields: [
                 {
-                  type: 3,
+                  type: 1,
                   typeName: "[u8; 32]",
                 },
               ],
@@ -368,18 +479,18 @@ const randomContract = {
         },
       },
       {
-        id: 3,
+        id: 1,
         type: {
           def: {
             array: {
               len: 32,
-              type: 4,
+              type: 2,
             },
           },
         },
       },
       {
-        id: 4,
+        id: 2,
         type: {
           def: {
             primitive: "u8",
@@ -387,7 +498,15 @@ const randomContract = {
         },
       },
       {
-        id: 5,
+        id: 3,
+        type: {
+          def: {
+            primitive: "u64",
+          },
+        },
+      },
+      {
+        id: 4,
         type: {
           def: {
             variant: {
@@ -395,7 +514,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 6,
+                      type: 5,
                     },
                   ],
                   index: 0,
@@ -404,7 +523,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 6,
                     },
                   ],
                   index: 1,
@@ -416,18 +535,18 @@ const randomContract = {
           params: [
             {
               name: "T",
-              type: 6,
+              type: 5,
             },
             {
               name: "E",
-              type: 7,
+              type: 6,
             },
           ],
           path: ["Result"],
         },
       },
       {
-        id: 6,
+        id: 5,
         type: {
           def: {
             tuple: [],
@@ -435,7 +554,7 @@ const randomContract = {
         },
       },
       {
-        id: 7,
+        id: 6,
         type: {
           def: {
             variant: {
@@ -451,7 +570,7 @@ const randomContract = {
         },
       },
       {
-        id: 8,
+        id: 7,
         type: {
           def: {
             variant: {
@@ -459,7 +578,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 9,
+                      type: 8,
                     },
                   ],
                   index: 0,
@@ -468,7 +587,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 6,
                     },
                   ],
                   index: 1,
@@ -480,11 +599,51 @@ const randomContract = {
           params: [
             {
               name: "T",
-              type: 9,
+              type: 8,
             },
             {
               name: "E",
-              type: 7,
+              type: 6,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 8,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 5,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 9,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 5,
+            },
+            {
+              name: "E",
+              type: 9,
             },
           ],
           path: ["Result"],
@@ -497,37 +656,25 @@ const randomContract = {
             variant: {
               variants: [
                 {
-                  fields: [
-                    {
-                      type: 6,
-                    },
-                  ],
                   index: 0,
-                  name: "Ok",
+                  name: "CallerIsNotOwner",
                 },
                 {
-                  fields: [
-                    {
-                      type: 10,
-                    },
-                  ],
                   index: 1,
-                  name: "Err",
+                  name: "CallerIsNotAdmin",
+                },
+                {
+                  index: 2,
+                  name: "PlayerNotExist",
                 },
               ],
             },
           },
-          params: [
-            {
-              name: "T",
-              type: 6,
-            },
-            {
-              name: "E",
-              type: 10,
-            },
+          path: [
+            "dia_oracle_example_randomness",
+            "randomoracleexample",
+            "Error",
           ],
-          path: ["Result"],
         },
       },
       {
@@ -537,33 +684,9 @@ const randomContract = {
             variant: {
               variants: [
                 {
-                  index: 0,
-                  name: "CallerIsNotOwner",
-                },
-                {
-                  index: 1,
-                  name: "CallerIsNotAdmin",
-                },
-              ],
-            },
-          },
-          path: [
-            "random_number_generator_contract",
-            "random_number_generator_contract",
-            "Error",
-          ],
-        },
-      },
-      {
-        id: 11,
-        type: {
-          def: {
-            variant: {
-              variants: [
-                {
                   fields: [
                     {
-                      type: 12,
+                      type: 11,
                     },
                   ],
                   index: 0,
@@ -572,7 +695,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 6,
                     },
                   ],
                   index: 1,
@@ -584,18 +707,170 @@ const randomContract = {
           params: [
             {
               name: "T",
-              type: 12,
+              type: 11,
             },
             {
               name: "E",
-              type: 7,
+              type: 6,
             },
           ],
           path: ["Result"],
         },
       },
       {
+        id: 11,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "None",
+                },
+                {
+                  fields: [
+                    {
+                      type: 0,
+                    },
+                  ],
+                  index: 1,
+                  name: "Some",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 0,
+            },
+          ],
+          path: ["Option"],
+        },
+      },
+      {
         id: 12,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 13,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 6,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 13,
+            },
+            {
+              name: "E",
+              type: 6,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 13,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "None",
+                },
+                {
+                  fields: [
+                    {
+                      type: 14,
+                    },
+                  ],
+                  index: 1,
+                  name: "Some",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 14,
+            },
+          ],
+          path: ["Option"],
+        },
+      },
+      {
+        id: 14,
+        type: {
+          def: {
+            sequence: {
+              type: 2,
+            },
+          },
+        },
+      },
+      {
+        id: 15,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  fields: [
+                    {
+                      type: 16,
+                    },
+                  ],
+                  index: 0,
+                  name: "Ok",
+                },
+                {
+                  fields: [
+                    {
+                      type: 6,
+                    },
+                  ],
+                  index: 1,
+                  name: "Err",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 16,
+            },
+            {
+              name: "E",
+              type: 6,
+            },
+          ],
+          path: ["Result"],
+        },
+      },
+      {
+        id: 16,
         type: {
           def: {
             variant: {
@@ -626,7 +901,7 @@ const randomContract = {
         },
       },
       {
-        id: 13,
+        id: 17,
         type: {
           def: {
             variant: {
@@ -634,7 +909,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 0,
+                      type: 18,
                     },
                   ],
                   index: 0,
@@ -643,7 +918,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 6,
                     },
                   ],
                   index: 1,
@@ -655,18 +930,49 @@ const randomContract = {
           params: [
             {
               name: "T",
-              type: 0,
+              type: 18,
             },
             {
               name: "E",
-              type: 7,
+              type: 6,
             },
           ],
           path: ["Result"],
         },
       },
       {
-        id: 14,
+        id: 18,
+        type: {
+          def: {
+            variant: {
+              variants: [
+                {
+                  index: 0,
+                  name: "None",
+                },
+                {
+                  fields: [
+                    {
+                      type: 3,
+                    },
+                  ],
+                  index: 1,
+                  name: "Some",
+                },
+              ],
+            },
+          },
+          params: [
+            {
+              name: "T",
+              type: 3,
+            },
+          ],
+          path: ["Option"],
+        },
+      },
+      {
+        id: 19,
         type: {
           def: {
             variant: {
@@ -674,7 +980,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 1,
+                      type: 3,
                     },
                   ],
                   index: 0,
@@ -683,7 +989,7 @@ const randomContract = {
                 {
                   fields: [
                     {
-                      type: 7,
+                      type: 6,
                     },
                   ],
                   index: 1,
@@ -695,18 +1001,18 @@ const randomContract = {
           params: [
             {
               name: "T",
-              type: 1,
+              type: 3,
             },
             {
               name: "E",
-              type: 7,
+              type: 6,
             },
           ],
           path: ["Result"],
         },
       },
       {
-        id: 15,
+        id: 20,
         type: {
           def: {
             primitive: "u128",
@@ -714,13 +1020,13 @@ const randomContract = {
         },
       },
       {
-        id: 16,
+        id: 21,
         type: {
           def: {
             composite: {
               fields: [
                 {
-                  type: 3,
+                  type: 1,
                   typeName: "[u8; 32]",
                 },
               ],
@@ -730,7 +1036,15 @@ const randomContract = {
         },
       },
       {
-        id: 17,
+        id: 22,
+        type: {
+          def: {
+            primitive: "u32",
+          },
+        },
+      },
+      {
+        id: 23,
         type: {
           def: {
             variant: {},

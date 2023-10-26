@@ -2,13 +2,15 @@ let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
-let { randomContract } = require("./contracts/rd_contract");
+let { randomContract } = require("./contracts/random_ocracle_contract");
 let {
   setBetazRandomContract,
   executeRandom,
-  getRandomNumberByContract,
-} = require("./contracts/rd_contract_calls");
-let { randomInt, getEstimatedGas } = require("./utils");
+  getTmp,
+  getRandomValueForPlayer,
+  commitPlayer,
+} = require("./contracts/random_oracle_contract_calls");
+let { randomInt, getEstimatedGas, delay } = require("./utils");
 require("dotenv").config();
 
 /****************** Connect smartnet BETAZ ***********************/
@@ -228,22 +230,35 @@ app.post("/getRareWins", async (req, res) => {
 
 // finalize
 app.post("/finalize", async (req, res) => {
-  let { player } = req.body;
-  let rd_number;
+  let { player, bet_number } = req.body;
+  let random_number;
 
-  if (!betaz_core_contract || !player) {
+  if (!betaz_core_contract || !player || !bet_number) {
     return res.status(400).json({ error: "Invalid request" });
   }
 
   // handle random number
   try {
-    const executeRd = await executeRandom(player, 99);
+    // get tmp
+    const tmp = await getTmp(player);
 
-    if (executeRd) {
-      const randomNumber = await getRandomNumberByContract(player);
+    // commit player
+    const commit = await commitPlayer(player);
 
-      if (randomNumber !== null) rd_number = randomNumber;
-    } else rd_number = randomInt(0, 99);
+    if (commit) {
+      await delay(parseInt(tmp) * 35000);
+
+      // execute random
+      let execute = await executeRandom(player, bet_number, 99);
+
+      if (execute) {
+        await delay(5000);
+
+        let number = await getRandomValueForPlayer(player);
+
+        if (number) random_number = number;
+      }
+    }
   } catch (error) {
     onsole.error("Error:", error);
     console.log("error", error);
@@ -265,11 +280,11 @@ app.post("/finalize", async (req, res) => {
       value,
       "finalize",
       player,
-      rd_number
+      random_number
     );
 
     await betaz_core_contract.tx
-      .finalize({ gasLimit, value }, player, rd_number)
+      .finalize({ gasLimit, value }, player, random_number)
       .signAndSend(keypair, ({ status, events, txHash }) => {
         if (status.isInBlock || status.isFinalized) {
           events?.forEach(
