@@ -131,15 +131,15 @@ const executeRandom = async function (caller, bet_number, max) {
     value,
     "randomNumber",
     caller,
-    bet_number,
-    max
+    { u8: bet_number },
+    { u8: max }
   );
 
   await contract.tx["randomNumber"](
     { gasLimit, value },
     caller,
-    bet_number,
-    max
+    { u8: bet_number },
+    { u8: max }
   )
     .signAndSend(keypair, async ({ status, dispatchError }) => {
       if (dispatchError) {

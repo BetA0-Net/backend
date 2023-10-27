@@ -239,28 +239,25 @@ app.post("/finalize", async (req, res) => {
 
   // handle random number
   try {
-    // get tmp
-    const tmp = await getTmp(player);
-
-    // commit player
-    const commit = await commitPlayer(player);
+    const [tmp, commit] = await Promise.all([
+      getTmp(player),
+      commitPlayer(player),
+    ]);
 
     if (commit) {
-      await delay(parseInt(tmp) * 35000);
+      await delay(parseInt(tmp) * 40000);
 
-      // execute random
-      let execute = await executeRandom(player, bet_number, 99);
+      const execute = await executeRandom(player, parseInt(bet_number), 99);
 
       if (execute) {
         await delay(5000);
-
-        let number = await getRandomValueForPlayer(player);
+        const number = await getRandomValueForPlayer(player);
 
         if (number) random_number = number;
       }
     }
   } catch (error) {
-    onsole.error("Error:", error);
+    console.error("Error:", error);
     console.log("error", error);
     return res.status(500).json({ error: "An error occurred random" });
   }

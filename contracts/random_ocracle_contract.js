@@ -1,8 +1,8 @@
 const randomContract = {
-  CONTRACT_ADDRESS: "5HJK4DunhQD82uaVn2rN1C12RajSRjpyyZtMzTJ4TdF6mQDq",
+  CONTRACT_ADDRESS: "5DNMvmeciYW3U8VUf88YwQiiuQFKxGGWd1bHyPsUqoYewH5e",
   CONTRACT_ABI: {
     source: {
-      hash: "0x9e81f1fe42ebaa45780d4561c86c63f4b023468dc6663c282b9e857ad6fb80fd",
+      hash: "0xaab509d27f62ef5fdb63c46cb1fd89fccd72e738a25b27b78007c1303cf37e98",
       language: "ink! 4.3.0",
       compiler: "rustc 1.75.0-nightly",
       build_info: {
@@ -16,7 +16,7 @@ const randomContract = {
       },
     },
     contract: {
-      name: "dia-oracle-example-randomness",
+      name: "dia-oracle-randomness",
       version: "0.1.0",
       authors: ["nitin.gurbani@diadata.org"],
     },
@@ -422,11 +422,11 @@ const randomContract = {
                   root: {
                     layout: {
                       leaf: {
-                        key: "0xaeb82c47",
+                        key: "0xefbac86c",
                         ty: 2,
                       },
                     },
-                    root_key: "0xaeb82c47",
+                    root_key: "0xefbac86c",
                   },
                 },
                 name: "randoms",
@@ -445,17 +445,17 @@ const randomContract = {
                   root: {
                     layout: {
                       leaf: {
-                        key: "0xb7d956f8",
+                        key: "0xed7281c0",
                         ty: 3,
                       },
                     },
-                    root_key: "0xb7d956f8",
+                    root_key: "0xed7281c0",
                   },
                 },
                 name: "latest_round",
               },
             ],
-            name: "RandomOracleExample",
+            name: "BetazRandomOracle",
           },
         },
         root_key: "0x00000000",
@@ -670,11 +670,7 @@ const randomContract = {
               ],
             },
           },
-          path: [
-            "dia_oracle_example_randomness",
-            "randomoracleexample",
-            "Error",
-          ],
+          path: ["dia_oracle_randomness", "randomoracleexample", "Error"],
         },
       },
       {
