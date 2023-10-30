@@ -17,7 +17,33 @@ const setBetazCoreAbiContract = (data) => {
   abi_contract = new Abi(data.CONTRACT_ABI);
 };
 
+const getLimitRound = async function (caller) {
+  if (!contract || !caller) {
+    return null;
+  }
+
+  const gasLimit = readOnlyGasLimit(contract);
+  const value = 0;
+
+  try {
+    const { result, output } = await contract.query["betA0CoreTrait::getLimitRound"](caller, {
+      gasLimit,
+      value,
+    });
+
+    if (result.isOk) {
+      const a = output.toHuman().Ok.replace(/\,/g, "");
+      return parseInt(a);
+    }
+  } catch (error) {
+    console.log("@_@ ", "getTmp", " error >>", error.message);
+  }
+
+  return null;
+};
+
 module.exports = {
   setBetazCoreContract,
   setBetazCoreAbiContract,
+  getLimitRound,
 };

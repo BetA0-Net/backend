@@ -2,14 +2,10 @@ let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
-let { randomContract } = require("./contracts/random_ocracle_contract");
 let {
-  setBetazRandomContract,
-  executeRandom,
-  getTmp,
-  getRandomValueForPlayer,
-  commitPlayer,
-} = require("./contracts/random_oracle_contract_calls");
+  getLimitRound,
+  setBetazCoreContract,
+} = require("./contracts/core_contract_calls");
 let { randomInt, getEstimatedGas, delay } = require("./utils");
 require("dotenv").config();
 
@@ -27,14 +23,13 @@ try {
 
   api.on("ready", () => {
     console.log("Smartnet BETAZ Ready");
-    setBetazRandomContract(api, randomContract);
-    console.log("Random Contract is ready");
 
     const core_contract = new ContractPromise(
       api,
       contract.CONTRACT_ABI,
       contract.CONTRACT_ADDRESS
     );
+    setBetazCoreContract(api, contract);
     console.log("core Contract is ready");
     betaz_core_contract = core_contract;
   });
@@ -230,36 +225,18 @@ app.post("/getRareWins", async (req, res) => {
 
 // finalize
 app.post("/finalize", async (req, res) => {
-  let { player, bet_number } = req.body;
-  let random_number;
+  let { player } = req.body;
 
-  if (!betaz_core_contract || !player || !bet_number) {
+  if (!betaz_core_contract || !player) {
     return res.status(400).json({ error: "Invalid request" });
   }
 
-  // handle random number
   try {
-    const [tmp, commit] = await Promise.all([
-      getTmp(player),
-      commitPlayer(player),
-    ]);
-
-    if (commit) {
-      await delay(parseInt(tmp) * 40000);
-
-      const execute = await executeRandom(player, parseInt(bet_number), 99);
-
-      if (execute) {
-        await delay(5000);
-        const number = await getRandomValueForPlayer(player);
-
-        if (number) random_number = number;
-      }
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    console.log("error", error);
-    return res.status(500).json({ error: "An error occurred random" });
+    const tmp = await getLimitRound(player);
+    console.log({ tmp });
+    await delay(parseInt(tmp) * 35000);
+  } catch (e) {
+    console.log(e);
   }
 
   // handle finalize
@@ -276,12 +253,11 @@ app.post("/finalize", async (req, res) => {
       betaz_core_contract,
       value,
       "finalize",
-      player,
-      random_number
+      player
     );
 
     await betaz_core_contract.tx
-      .finalize({ gasLimit, value }, player, random_number)
+      .finalize({ gasLimit, value }, player)
       .signAndSend(keypair, ({ status, events, txHash }) => {
         if (status.isInBlock || status.isFinalized) {
           events?.forEach(
