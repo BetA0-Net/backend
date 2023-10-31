@@ -17,33 +17,7 @@ const setBetazCoreAbiContract = (data) => {
   abi_contract = new Abi(data.CONTRACT_ABI);
 };
 
-const canFinalize = async function (caller) {
-  if (!contract || !caller) {
-    return null;
-  }
-
-  const gasLimit = readOnlyGasLimit(contract);
-  const value = 0;
-
-  try {
-    const { result, output } = await contract.query["canFinalize"](caller, {
-      gasLimit,
-      value,
-    }, caller);
-
-    if (result.isOk) {
-      const a = output.toHuman().Ok;
-      return a;
-    }
-  } catch (error) {
-    console.log("@_@ ", "getTmp", " error >>", error.message);
-  }
-
-  return null;
-};
-
 module.exports = {
   setBetazCoreContract,
   setBetazCoreAbiContract,
-  canFinalize,
 };

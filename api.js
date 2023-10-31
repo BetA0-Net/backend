@@ -2,10 +2,12 @@ let { Keyring, ApiPromise, WsProvider } = require("@polkadot/api");
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
+let { setBetazCoreContract } = require("./contracts/core_contract_calls");
+let { dia_contract } = require("./contracts/dia_contract");
 let {
-  canFinalize,
-  setBetazCoreContract,
-} = require("./contracts/core_contract_calls");
+  setDIACoreContract,
+  getRandomValueForRound,
+} = require("./contracts/dia_contract_calls");
 let { randomInt, getEstimatedGas, delay } = require("./utils");
 require("dotenv").config();
 
@@ -32,6 +34,9 @@ try {
     setBetazCoreContract(api, contract);
     console.log("core Contract is ready");
     betaz_core_contract = core_contract;
+
+    setDIACoreContract(api, dia_contract);
+    console.log("DIA Contract is ready");
   });
 
   api.on("error", (err) => {
@@ -228,7 +233,7 @@ app.post("/getRareWins", async (req, res) => {
 
 // finalize
 app.post("/finalize", async (req, res) => {
-  let { player } = req.body;
+  let { player, oracleRound } = req.body;
 
   if (!betaz_core_contract || !player) {
     return res.status(400).json({ error: "Invalid request" });
@@ -237,7 +242,10 @@ app.post("/finalize", async (req, res) => {
   let isFinalized = false;
   while (!isFinalized) {
     try {
-      isFinalized = await canFinalize(player);
+      isFinalized = await getRandomValueForRound(
+        player,
+        oracleRound.replaceAll(",", "")
+      );
       await new Promise((resolve) => setTimeout(resolve, 1000));
     } catch (e) {
       console.log(e);
@@ -264,7 +272,7 @@ app.post("/finalize", async (req, res) => {
 
     await betaz_core_contract.tx
       .finalize({ gasLimit, value }, player)
-      .signAndSend(keypair, ({ status, events, txHash }) => {
+      .signAndSend(keypair, async ({ status, events, txHash }) => {
         if (status.isInBlock || status.isFinalized) {
           events?.forEach(
             async ({ event: { data, method, section }, phase }) => {
@@ -310,7 +318,7 @@ app.post("/finalize", async (req, res) => {
                             : 0,
                           oracle_round: eventValues[5],
                         };
-                        console.log({ obj });
+
                         let found = await database.LoseEvent.findOne(obj);
                         if (!found) {
                           await database.LoseEvent.create(obj);
