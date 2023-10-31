@@ -22,6 +22,9 @@ const WinEventSchema = new mongoose.Schema({
   win_amount: {
     type: Number,
   },
+  oracle_round: {
+    type: Number,
+  },
 });
 const LoseEventSchema = new mongoose.Schema({
   blockNumber: {
@@ -40,6 +43,9 @@ const LoseEventSchema = new mongoose.Schema({
     type: Number,
   },
   bet_amount: {
+    type: Number,
+  },
+  oracle_round: {
     type: Number,
   },
 });

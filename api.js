@@ -3,7 +3,7 @@ let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
 let {
-  getLimitRound,
+  getRoundDistance,
   setBetazCoreContract,
 } = require("./contracts/core_contract_calls");
 let { randomInt, getEstimatedGas, delay } = require("./utils");
@@ -125,6 +125,7 @@ app.post("/getEventsByPlayer", async (req, res) => {
     prediction: result.bet_number,
     randomNumber: result.random_number,
     wonAmount: result?.win_amount || 0,
+    oracleRound: result.oracle_round,
   }));
 
   return res.send({ status: "OK", ret: dataTable });
@@ -174,6 +175,7 @@ app.post("/getEvents", async (req, res) => {
     prediction: result.bet_number,
     randomNumber: result.random_number,
     wonAmount: result?.win_amount || 0,
+    oracleRound: result.oracle_round,
   }));
 
   return res.send({ status: "OK", ret: dataTable });
@@ -218,6 +220,7 @@ app.post("/getRareWins", async (req, res) => {
     prediction: data.bet_number,
     randomNumber: data.random_number,
     wonAmount: data?.win_amount || 0,
+    oracleRound: data.oracle_round,
   }));
 
   return res.send({ status: "OK", ret: dataTable });
@@ -232,8 +235,7 @@ app.post("/finalize", async (req, res) => {
   }
 
   try {
-    const tmp = await getLimitRound(player);
-    console.log({ tmp });
+    const tmp = await getRoundDistance(player);
     await delay(parseInt(tmp) * 35000);
   } catch (e) {
     console.log(e);
@@ -277,6 +279,7 @@ app.post("/finalize", async (req, res) => {
                   if (event_name === "WinEvent" || event_name === "LoseEvent") {
                     const eventValues = [];
                     if (status.isFinalized) {
+                      console.log(`player ${player} finalized`);
                       const blockHash = status.asFinalized;
                       const signedBlock = await api.rpc.chain.getBlock(
                         blockHash
@@ -301,7 +304,9 @@ app.post("/finalize", async (req, res) => {
                           bet_amount: eventValues[4]
                             ? eventValues[4] / 10 ** 12
                             : 0,
+                          oracle_round: eventValues[5],
                         };
+                        console.log({ obj });
                         let found = await database.LoseEvent.findOne(obj);
                         if (!found) {
                           await database.LoseEvent.create(obj);
@@ -317,6 +322,7 @@ app.post("/finalize", async (req, res) => {
                             player: obj.player,
                             bet_number: obj.bet_number,
                             is_over: obj.is_over,
+                            oracle_round: obj.oracle_round,
                           },
                         });
                       } else if (event_name === "WinEvent") {
@@ -332,7 +338,9 @@ app.post("/finalize", async (req, res) => {
                           win_amount: eventValues[5]
                             ? eventValues[5] / 10 ** 12
                             : 0,
+                          oracle_round: eventValues[6],
                         };
+                        console.log({obj})
                         let found = await database.WinEvent.findOne(obj);
                         if (!found) {
                           await database.WinEvent.create(obj);
@@ -349,6 +357,7 @@ app.post("/finalize", async (req, res) => {
                             player: obj.player,
                             bet_number: obj.bet_number,
                             is_over: obj.is_over,
+                            oracle_round: obj.oracle_round,
                           },
                         });
                       }
