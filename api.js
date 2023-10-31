@@ -3,7 +3,7 @@ let { ContractPromise, Abi } = require("@polkadot/api-contract");
 const { jsonrpc } = require("@polkadot/types/interfaces/jsonrpc");
 let { contract } = require("./contracts/core_contract");
 let {
-  getRoundDistance,
+  canFinalize,
   setBetazCoreContract,
 } = require("./contracts/core_contract_calls");
 let { randomInt, getEstimatedGas, delay } = require("./utils");
@@ -234,11 +234,15 @@ app.post("/finalize", async (req, res) => {
     return res.status(400).json({ error: "Invalid request" });
   }
 
-  try {
-    const tmp = await getRoundDistance(player);
-    await delay(parseInt(tmp) * 35000);
-  } catch (e) {
-    console.log(e);
+  let isFinalized = false;
+  while (!isFinalized) {
+    try {
+      isFinalized = await canFinalize(player);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch (e) {
+      console.log(e);
+      break;
+    }
   }
 
   // handle finalize
@@ -340,7 +344,6 @@ app.post("/finalize", async (req, res) => {
                             : 0,
                           oracle_round: eventValues[6],
                         };
-                        console.log({obj})
                         let found = await database.WinEvent.findOne(obj);
                         if (!found) {
                           await database.WinEvent.create(obj);

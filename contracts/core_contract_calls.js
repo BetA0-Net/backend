@@ -17,7 +17,7 @@ const setBetazCoreAbiContract = (data) => {
   abi_contract = new Abi(data.CONTRACT_ABI);
 };
 
-const getRoundDistance = async function (caller) {
+const canFinalize = async function (caller) {
   if (!contract || !caller) {
     return null;
   }
@@ -26,14 +26,14 @@ const getRoundDistance = async function (caller) {
   const value = 0;
 
   try {
-    const { result, output } = await contract.query["betA0CoreTrait::getRoundDistance"](caller, {
+    const { result, output } = await contract.query["canFinalize"](caller, {
       gasLimit,
       value,
-    });
+    }, caller);
 
     if (result.isOk) {
-      const a = output.toHuman().Ok.replace(/\,/g, "");
-      return parseInt(a);
+      const a = output.toHuman().Ok;
+      return a;
     }
   } catch (error) {
     console.log("@_@ ", "getTmp", " error >>", error.message);
@@ -45,5 +45,5 @@ const getRoundDistance = async function (caller) {
 module.exports = {
   setBetazCoreContract,
   setBetazCoreAbiContract,
-  getRoundDistance,
+  canFinalize,
 };
