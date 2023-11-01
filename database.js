@@ -65,9 +65,21 @@ const EmailSubscribeSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+const PendingUnstakeSchema = new mongoose.Schema({
+  caller: {
+    type: String,
+  },
+  amount: {
+    type: Number,
+  },
+  time: {
+    type: Number,
+  },
+});
 module.exports = {
   ScannedBlocks: mongoose.model("ScannedBlocks", ScannedBlocksSchema),
   LoseEvent: mongoose.model("LoseEvent", LoseEventSchema),
   WinEvent: mongoose.model("WinEvent", WinEventSchema),
   EmailSubscribe: mongoose.model("EmailSubscribe", EmailSubscribeSchema),
+  PendingUnstake: mongoose.model("PendingUnstake", PendingUnstakeSchema),
 };

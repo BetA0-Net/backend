@@ -242,7 +242,9 @@ app.post("/finalize", async (req, res) => {
   let isFinalized = false;
   while (!isFinalized) {
     try {
-      isFinalized = await getRandomValueForRound(oracleRound.replaceAll(",", ""));
+      isFinalized = await getRandomValueForRound(
+        oracleRound.replaceAll(",", "")
+      );
       await delay(1000);
     } catch (e) {
       console.log(e);
@@ -390,6 +392,50 @@ app.post("/finalize", async (req, res) => {
     console.log("error", error);
     return res.status(500).json({ error: "An error occurred finalize" });
   }
+});
+
+// add pending unstake
+app.post("/addPendingUnstake", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  const { caller, amount, time } = req.body;
+
+  try {
+    await database.PendingUnstake.create({ caller, amount, time });
+
+    res.send({ status: "OK" });
+  } catch (error) {
+    console.error("Error:", error);
+    console.log("error", error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred addPendingUnstake" });
+  }
+});
+
+// remove pending unstake
+
+// get pending unstake
+app.post("/getPendingUnstake", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  const { caller, limit, offset } = req.body;
+  if (!limit) limit = 15;
+  if (!offset) offset = 0;
+  if (!caller) {
+    return res.send({ status: "FAILED", message: "Invalid Address" });
+  }
+
+  let data = await database.PendingUnstake.find({ caller: caller })
+    .skip(parseInt(offset))
+    .limit(parseInt(limit));
+
+  // format result
+  const dataTable = data.map((data) => ({
+    caller: data.caller,
+    amount: data.amount,
+    time: data.time,
+  }));
+
+  return res.send({ status: "OK", ret: dataTable });
 });
 
 // send mail
