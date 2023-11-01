@@ -242,11 +242,8 @@ app.post("/finalize", async (req, res) => {
   let isFinalized = false;
   while (!isFinalized) {
     try {
-      isFinalized = await getRandomValueForRound(
-        player,
-        oracleRound.replaceAll(",", "")
-      );
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      isFinalized = await getRandomValueForRound(oracleRound.replaceAll(",", ""));
+      await delay(1000);
     } catch (e) {
       console.log(e);
       break;

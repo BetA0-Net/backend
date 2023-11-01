@@ -1,9 +1,11 @@
 let { ContractPromise, Abi } = require("@polkadot/api-contract");
 let { Keyring } = require("@polkadot/api");
 let { readOnlyGasLimit, getEstimatedGas } = require("../utils");
+require("dotenv").config();
 
 let contract;
 let abi_contract;
+let defaultCaller = process.env.DEFAULT_CALLER_ADDRESS;
 
 const setDIACoreContract = (api, data) => {
   contract = new ContractPromise(
@@ -17,8 +19,8 @@ const setDIAAbiContract = (data) => {
   abi_contract = new Abi(data.CONTRACT_ABI);
 };
 
-const getRandomValueForRound = async function (caller, round) {
-  if (!contract || !caller) {
+const getRandomValueForRound = async function (round) {
+  if (!contract) {
     return null;
   }
 
@@ -29,12 +31,12 @@ const getRandomValueForRound = async function (caller, round) {
     const { result, output } = await contract.query[
       "randomOracleGetter::getRandomValueForRound"
     ](
-      caller,
+      defaultCaller,
       {
         gasLimit,
         value,
       },
-      round
+      { u64: round }
     );
 
     if (result.isOk) {
@@ -42,7 +44,7 @@ const getRandomValueForRound = async function (caller, round) {
       return a;
     }
   } catch (error) {
-    console.log("@_@ ", "getTmp", " error >>", error.message);
+    console.log("@_@ ", "getRandomValueForRound", " error >>", error.message);
   }
 
   return null;
