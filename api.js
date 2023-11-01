@@ -399,20 +399,53 @@ app.post("/addPendingUnstake", async (req, res) => {
   if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
   const { caller, amount, time } = req.body;
 
-  try {
-    await database.PendingUnstake.create({ caller, amount, time });
-
-    res.send({ status: "OK" });
-  } catch (error) {
-    console.error("Error:", error);
-    console.log("error", error);
-    return res
-      .status(500)
-      .json({ error: "An error occurred addPendingUnstake" });
-  }
+  await database.PendingUnstake.create({ caller, amount, time })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot addPendingUnstake. Maybe data was not found!`,
+        });
+      } else {
+        res.send({
+          message: "added successfully!",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: "Could not delete",
+      });
+    });
 });
 
 // remove pending unstake
+app.delete("/deletePendingUnstake", async (req, res) => {
+  if (!req.body) return res.send({ status: "FAILED", message: "No Input" });
+  const { id } = req.body;
+
+  await database.PendingUnstake.findByIdAndRemove(
+    { _id: id },
+    { useFindAndModify: false }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot delete with id=${id}. Maybe data was not found!`,
+        });
+      } else {
+        res.send({
+          message: "deleted successfully!",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: "Could not delete with id=" + id,
+      });
+    });
+});
 
 // get pending unstake
 app.post("/getPendingUnstake", async (req, res) => {
@@ -430,6 +463,7 @@ app.post("/getPendingUnstake", async (req, res) => {
 
   // format result
   const dataTable = data.map((data) => ({
+    id: data._id,
     caller: data.caller,
     amount: data.amount,
     time: data.time,
